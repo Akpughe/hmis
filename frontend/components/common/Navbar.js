@@ -41,11 +41,9 @@ const Navbar = ({
   useEffect(() => {
     loadUser();
   }, [loadUser]);
+  const router = useRouter()
 
-  //   const router = useRouter()
-  // if (isAuthenticated) {
-  //   return router.push('/dashboard');
-  // }
+  !isAuthenticated ? router.push('/') : ''
   return (
     <nav className="bg-white fixed border-b  h-auto w-full">
       <div

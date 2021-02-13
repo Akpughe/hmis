@@ -31,7 +31,7 @@ export default function authy(state = initailState, action) {
         isAuthenticated: true,
         loading: false,
       };
-    case AUTH_ERROR:
+    // case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
       localStorage.removeItem('token');
