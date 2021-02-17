@@ -4,7 +4,7 @@ import { MainLayout, PatientRegisterForm, PatientView } from '../components/comm
 
 const patients = () => {
   const [show, setShow] = useState(false)
-  const [showP, setShowP] = useState(false)
+  const [showP, setShowP] = useState(false)  
 
   const handleShow = () => {
     setShow(!show)

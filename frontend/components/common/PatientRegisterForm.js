@@ -47,24 +47,36 @@ const PatientRegisterForm = () => {
                 </label>
                 <label className="block">
                   <span className="text-gray-700">Marital Status</span>
-                  <div class="mt-2">
-                    <label class="inline-flex items-center">
-                      <input type="radio" class="form-radio" value="single" />
-                      <span class="ml-2">Single</span>
+                  <div className="mt-2">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        className="form-radio"
+                        value="single"
+                      />
+                      <span className="ml-2">Single</span>
                     </label>
-                    <label class="inline-flex items-center ml-6">
-                      <input type="radio" class="form-radio" value="married" />
-                      <span class="ml-2">Married</span>
+                    <label className="inline-flex items-center ml-6">
+                      <input
+                        type="radio"
+                        className="form-radio"
+                        value="married"
+                      />
+                      <span className="ml-2">Married</span>
                     </label>
-                    <label class="inline-flex items-center ml-6">
-                      <input type="radio" class="form-radio" value="divorced" />
-                      <span class="ml-2">Divorced</span>
+                    <label className="inline-flex items-center ml-6">
+                      <input
+                        type="radio"
+                        className="form-radio"
+                        value="divorced"
+                      />
+                      <span className="ml-2">Divorced</span>
                     </label>
                   </div>
                 </label>
-                <label class="block">
-                  <span class="text-gray-700">State of Origin</span>
-                  <select class="block w-full mt-1 py-4 px-2">
+                <label className="block">
+                  <span className="text-gray-700">State of Origin</span>
+                  <select className="block w-full mt-1 py-4 px-2">
                     {stateOfOrigin.map((states, idx) => {
                       return (
                         <>
@@ -114,9 +126,9 @@ const PatientRegisterForm = () => {
                     placeholder="Password"
                   />
                 </label>
-                <label class="block">
-                  <span class="text-gray-700">Nationality</span>
-                  <select class="block w-full mt-1 py-4 px-2">
+                <label className="block">
+                  <span className="text-gray-700">Nationality</span>
+                  <select className="block w-full mt-1 py-4 px-2">
                     {nationality.map((nat, idx) => {
                       return (
                         <>
@@ -138,8 +150,10 @@ const PatientRegisterForm = () => {
                 </label>
               </div>
               <div>
-              <button  className="bg-indigo-500 py-4 px-8 rounded text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50">Submit</button>
-            </div>
+                <button className="bg-indigo-500 py-4 px-8 rounded text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50">
+                  Submit
+                </button>
+              </div>
             </div>
           </form>
         </div>
