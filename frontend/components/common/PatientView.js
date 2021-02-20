@@ -126,6 +126,18 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       ...getColumnSearchProps('firstName'),
     },
     {
+      title: 'Lastname',
+      dataIndex: 'lastName',
+      key: 'lastName',
+      ...getColumnSearchProps('lastName'),
+    },
+    {
+      title: 'Date Of Birth',
+      dataIndex: 'dateOfBirth',
+      key: 'dateOfBirth',
+      ...getColumnSearchProps('dateOfBirth'),
+    },
+    {
       title: 'Patient Number',
       dataIndex: 'regNumber',
       key: 'regNumber',
@@ -160,6 +172,7 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
           columns={columns}
           loading={false}
           onClick={handleClick}
+          size="large"
         />
       )}
     </>
