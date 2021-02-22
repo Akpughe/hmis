@@ -1,6 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const cors = require('cors')
+const cors = require('cors');
 const userRoutes = require('./routes/user');
 const patientRoutes = require('./routes/patient');
 const appointmentRoutes = require('./routes/appointment');
@@ -30,12 +30,6 @@ let corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(cors());
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "https://localhost:3000"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
 
 app.get('/', (req, res, next) => res.send('API Running...'));
 
