@@ -1,9 +1,18 @@
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
-import  { MainLayout } from '../components/common';
+import { connect } from 'react-redux';
+import { MainLayout } from '../components/common';
 import { Card } from '../components/common';
 import { Banner, Chart, Table, newPatient, month } from '../components/common';
+import { getPatients } from '../actions/patient';
 
-export default function Home() {
+ function Home({ getPatients, patient: { patients, loading } }) {
+  useEffect(() => {
+    getPatients();
+  }, [getPatients]);
+
+  console.log(patients);
   return (
     <>
       <Head>
@@ -13,15 +22,12 @@ export default function Home() {
 
       <MainLayout>
         <div className="flex flex-col flex-grow pl-80 pt-20 mb-10 bg-gray-100 h-full">
-          {/* <div className="w-full">
-            <Banner page="Dashboard" />
-          </div> */}
           <div className="mb-8 mt-4 flex">
             <div className="mr-8">
               <Card
                 color="bg-gradient-to-r from-blue-800 to-blue-400"
-                figure="100"
-                job="New Patient"
+                figure={patients.length}
+                job="Total Patients"
               />
             </div>
             <div className="mr-8">
@@ -52,7 +58,9 @@ export default function Home() {
                     {month.map((m, idx) => {
                       return (
                         <>
-                          <option key={m} value="">{m}</option>
+                          <option key={m} value="">
+                            {m}
+                          </option>
                         </>
                       );
                     })}
@@ -165,7 +173,9 @@ export default function Home() {
                           </span>
                         </td>
                         <td>
-                          <span className="cursor-pointer font-bold mr-3">...</span>
+                          <span className="cursor-pointer font-bold mr-3">
+                            ...
+                          </span>
                         </td>
                       </tr>
                     </>
@@ -179,3 +189,14 @@ export default function Home() {
     </>
   );
 }
+
+Home.propTypes = {
+  getPatients: PropTypes.func.isRequired,
+  patient: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  patient: state.patient,
+});
+
+export default connect(mapStateToProps, { getPatients })(Home);
