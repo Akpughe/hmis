@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbrand from './Navbrand';
 import { connect } from 'react-redux';
 import { loadUser, logout } from '../../actions/auth';
@@ -41,9 +41,15 @@ const Navbar = ({
   useEffect(() => {
     loadUser();
   }, [loadUser]);
-  const router = useRouter()
 
-  !isAuthenticated ? router.push('/') : ''
+  const [drop, setDrop] = useState(false);
+
+  const handleDrop = () => {
+    setDrop(!drop);
+  };
+  // const router = useRouter()
+
+  // !isAuthenticated ? router.push('/') : ''
   return (
     <nav className="bg-white fixed border-b  h-auto w-full">
       <div
@@ -124,6 +130,7 @@ const Navbar = ({
                   className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                   id="user-menu"
                   aria-haspopup="true"
+                  onClick={handleDrop}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -134,35 +141,38 @@ const Navbar = ({
                 </button>
               </div>
 
-              <div
-                class="origin-top-right absolute left-0 mt-2 w-28 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu"
-              >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
+              {drop && (
+                <div
+                  drop={drop.toString()}
+                  className="origin-top-right absolute left-0 mt-2 w-28 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu"
                 >
-                  Your Profile
-                </a>
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
-                >
-                  Settings
-                </a>
-                <a
-                  // href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
-                  onClick={logout}
-                >
-                  Sign out
-                </a>
-              </div>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Your Profile
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Settings
+                  </a>
+                  <a
+                    // href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                    onClick={logout}
+                  >
+                    Sign out
+                  </a>
+                </div>
+              )}
             </div>
             <span className="font-semibold text-base text-gray-500 ml-2">
               {user && user.accountType} {user && user.lastname}
