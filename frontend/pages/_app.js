@@ -13,7 +13,7 @@ import { loadUser } from '../actions/auth';
 
 axios.defaults.baseURL = 'http://localhost:4000';
 
-function MyApp({ Component, pageProps, isAuthenticated}) {
+function MyApp({ Component, pageProps, isAuthenticated }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -22,17 +22,8 @@ function MyApp({ Component, pageProps, isAuthenticated}) {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-
-    if (!isAuthenticated) {
-          return router.push('/');
-        }
   }, []);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     return router.push('/dashboard');
-  //   }
-  // });
   return (
     <Provider store={store}>
       <Component {...pageProps} />
@@ -43,4 +34,3 @@ const makeStore = () => store;
 const wrapper = createWrapper(makeStore);
 
 export default wrapper.withRedux(MyApp);
-// export default withRedux(makeStore)(MyApp);
