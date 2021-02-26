@@ -9,7 +9,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  staffNumber: {
+  userNumber: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female'],
+  },
+  dateOfBirth: {
     type: String,
     required: true,
   },
@@ -18,17 +27,26 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     required: true,
   },
   password: {
     type: String,
     required: true,
   },
+  maritalStatus: {
+    type: String,
+    required: true,
+    enum: ['Single', 'Divorced', 'Married'],
+  },
+  address: {
+    type: String,
+    required: true,
+  },
   accountType: {
     type: String,
     required: true,
-    enum: ['Administrator','Doctor', 'Nurse', 'Pharmacist'],
+    enum: ['Administrator','Doctor', 'Nurse', 'Patient'],
   },
 });
 

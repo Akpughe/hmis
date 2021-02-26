@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const Patient = require('../models/Patient');
 
 exports.getUserById = async (req, res, next) => {
   try {
@@ -53,8 +54,12 @@ exports.register = async (req, res, next) => {
     email,
     phoneNumber,
     password,
-    staffNumber,
+    maritalStatus,
+    gender,
+    dateOfBirth,
+    userNumber,
     accountType,
+    address,
   } = req.body;
 
   if (
@@ -63,23 +68,31 @@ exports.register = async (req, res, next) => {
     !email ||
     !password ||
     !phoneNumber ||
-    !accountType
+    !gender ||
+    !dateOfBirth ||
+    !maritalStatus ||
+    !accountType ||
+    !address
   )
     return res
       .status(400)
       .json({ errors: [{ msg: 'Please fill all fields' }] });
 
   var possible = '0123456789';
-  var newStaffNumber = 'staff';
+  var newUserNumber = 'user';
 
   for (i = 0; i < 4; i++) {
-    newStaffNumber += possible.charAt(
+    newUserNumber += possible.charAt(
       Math.floor(Math.random() * possible.length)
     );
   }
 
   try {
-    let user = await User.findOne({ email, staffNumber: newStaffNumber });
+    let user = await User.findOne({
+      email,
+      userNumber: newUserNumber,
+    });
+    let patient = await Patient.find();
 
     if (user) {
       return res
@@ -98,14 +111,34 @@ exports.register = async (req, res, next) => {
       lastname,
       email,
       phoneNumber,
+      maritalStatus,
+      dateOfBirth,
+      gender,
       password: encryptedPassword,
-      staffNumber: newStaffNumber,
+      userNumber: newUserNumber,
       accountType,
+      address,
     });
+    if (accountType === 'Patient') {
+      patient = new Patient({
+        firstname,
+        lastname,
+        email,
+        phoneNumber,
+        maritalStatus,
+        dateOfBirth,
+        gender,
+        password: encryptedPassword,
+        userNumber: newUserNumber,
+        accountType,
+        address,
+      });
+    }
 
+    await patient.save();
     await user.save();
 
-    res.json({ msg: 'User created successfully' + ' ' + newStaffNumber });
+    res.json({ msg: 'User created successfully' + ' ' + newUserNumber });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Sever Error' });
