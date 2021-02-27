@@ -23,9 +23,7 @@ exports.getAllAppoinments = async (req, res, next) => {
 
     const appointments = await Appointment.find();
 
-    res
-      .status(200)
-      .json({ msg: 'Fetched appointment successfully', appointments });
+    res.status(200).json(appointments);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Sever Error' });
@@ -40,9 +38,9 @@ exports.bookAppointment = async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { appointmentDate, concern } = req.body;
+  const { appointmentDate, concern, appointmentTime } = req.body;
 
-  if (!appointmentDate || !concern)
+  if (!appointmentDate || !concern || !appointmentTime)
     return res
       .status(400)
       .json({ errors: [{ msg: 'Please fill all fields' }] });
@@ -55,24 +53,27 @@ exports.bookAppointment = async (req, res, next) => {
       Math.floor(Math.random() * possible.length)
     );
   }
+  const userId = req.userId;
   const patientId = req.patientId;
   try {
-    const patient = await Patient.findById(patientId);
-
-    if (!patient)
+    const user = await User.findById(userId);
+    // const patient = await Patient.find();
+    if (!user)
       return res.status(404).json({ errors: [{ msg: 'account not found' }] });
 
     const appointment = new Appointment({
       appointmentDate,
+      appointmentTime,
       concern,
       appointmentNumber: newAppointmentNumber,
-      patient: patient._id,
+      user: user._id,
     });
 
-    patient.appointment.push(appointment._id);
+    user.appointment.push(appointment._id);
+    // patient.appointment.push(appointment._id);
 
     await appointment.save();
-    await patient.save();
+    await user.save();
 
     res
       .status(201)
