@@ -32,7 +32,7 @@ router.post(
 router.post(
   '/login',
   [
-    check('staffNumber', 'Please include a valid staff number').not().isEmpty(),
+    check('userNumber', 'Please include a valid user number').not().isEmpty(),
     check('password', 'Please enter a password with 5 or more characters').isLength({ min: 5 }),
   ],
   userController.login
