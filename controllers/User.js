@@ -150,15 +150,15 @@ exports.login = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { staffNumber, password } = req.body;
+  const { userNumber, password } = req.body;
 
   try {
-    let user = await User.findOne({ staffNumber });
+    let user = await User.findOne({ userNumber });
 
     if (!user)
       return res
         .status(404)
-        .json({ errors: [{ msg: 'Staff Number does not exist' }] });
+        .json({ errors: [{ msg: 'User Number does not exist' }] });
 
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -167,7 +167,7 @@ exports.login = async (req, res, next) => {
 
     const token = jwt.sign(
       {
-        staffNumber: user.staffNumber,
+        userNumber: user.userNumber,
         userId: user._id.toString(),
       },
       config.get('jwtSecret')
@@ -180,7 +180,7 @@ exports.login = async (req, res, next) => {
         lastname: user.lastname,
         email: user.email,
         accountType: user.accountType,
-        staffNumber: user.staffNumber,
+        userNumber: user.userNumber,
         _id: user._id,
       },
       msg: 'Login successful',
