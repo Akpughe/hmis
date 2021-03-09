@@ -46,7 +46,7 @@ const UserSchema = new mongoose.Schema({
   accountType: {
     type: String,
     required: true,
-    enum: ['Administrator','Doctor', 'Nurse', 'Patient'],
+    enum: ['Administrator', 'Doctor', 'Nurse', 'Patient'],
   },
   appointment: [
     {
