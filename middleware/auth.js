@@ -16,6 +16,7 @@ module.exports = function (req, res, next) {
 
     req.userId = decoded.userId;
     req.patientId = decoded.patientId;
+    req.appointmentId = decoded.appointmentId;
     // console.log(decoded.patientId);
     next();
   } catch (err) {
