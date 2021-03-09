@@ -159,7 +159,7 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
     setPop(!pop);
   };
 
-  console.log(patients.length);
+  // console.log();
 
   return (
     <>
@@ -168,11 +168,19 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
         <h1>Loading...</h1>
       ) : (
         <Table
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                alert('clicked');
+              }, // click row
+            };
+          }}
           dataSource={patients}
           columns={columns}
           loading={false}
           onClick={handleClick}
           size="large"
+          className="shadow-xl"
         />
       )}
     </>
