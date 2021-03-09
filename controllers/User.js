@@ -6,14 +6,19 @@ const jwt = require('jsonwebtoken');
 const Patient = require('../models/Patient');
 
 exports.getUserById = async (req, res, next) => {
+  const userId = req.userId
   try {
-    const user = await User.findById(req.userId).select('-password');
+    const user = await User.findById(userId)
+      .select('-password')
+      .populate('appointment', ['concern','appointmentTime', 'appointmentDate', 'appointmentNumber']);
     res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 };
+
+
 
 exports.getAllUsers = async (req, res, next) => {
   const errors = validationResult(req);
