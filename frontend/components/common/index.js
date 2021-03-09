@@ -6,6 +6,8 @@ import Chart from './Chart';
 import Table from './Table';
 import PatientRegisterForm from './PatientRegisterForm';
 import PatientView from './PatientView';
+import AppointmentView from './AppointmentView';
+import BookMe from './BookMe';
 import {
   newPatient,
   month,
@@ -30,4 +32,6 @@ export {
   data,
   PatientRegisterForm,
   PatientView,
+  AppointmentView,
+  BookMe
 };
