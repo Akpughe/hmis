@@ -56,7 +56,7 @@ export const createPatient = (formData, history, edit = false) => async (
       history.push('/dashboard');
     }
   } catch (err) {
-    // const errors = err.response.data.errors;
+    const errors = 'error';
 
     if (errors) {
       // errors.forEach((error) => dispatch( ('danger')));
