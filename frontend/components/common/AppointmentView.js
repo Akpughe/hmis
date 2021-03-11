@@ -11,6 +11,7 @@ const AppointmentView = ({
     patient,
     appointments,
     loading,
+    user,
   },
 }) => {
   useEffect(() => {
@@ -30,8 +31,8 @@ const AppointmentView = ({
     },
     {
       title: 'Patient',
-      dataIndex: 'lastName',
-      key: 'lastName',
+      dataIndex: 'lastname',
+      key: 'lastname',
     },
     {
       title: 'Appointment Nø',
@@ -48,9 +49,14 @@ const AppointmentView = ({
       dataIndex: 'concern',
       key: 'concern',
     },
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
   ];
 
-  console.log(patient);
+  console.log(appointments);
   return (
     <>
       <Table columns={columns} dataSource={appointments} className="w-full" />
