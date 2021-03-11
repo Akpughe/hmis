@@ -7,37 +7,31 @@ import { createPatient } from '../../actions/patient';
 
 const PatientRegisterForm = ({ createPatient }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    regNumber: '',
+    firstname: '',
+    lastname: '',
+    userNumber: '',
     gender: '',
     dateOfBirth: '',
     email: '',
     phoneNumber: '',
     password: '',
     maritalStatus: '',
-    nationality: '',
-    state: '',
-    lga: '',
-    occupation: '',
     address: '',
+    accountType: '',
   });
 
   const {
-    firstName,
-    lastName,
-    regNumber,
+    firstname,
+    lastname,
+    userNumber,
     gender,
     dateOfBirth,
     email,
     phoneNumber,
     password,
     maritalStatus,
-    nationality,
-    state,
-    lga,
-    occupation,
     address,
+    accountType,
   } = formData;
 
   const onChange = (e) =>
@@ -62,22 +56,22 @@ const PatientRegisterForm = ({ createPatient }) => {
                 <label className="block">
                   <span className="text-gray-700">Firstname</span>
                   <input
-                    name="firstName"
+                    name="firstname"
                     type="text"
                     className="form-input mt-1 block w-full py-4 px-2"
                     placeholder="John"
-                    value={firstName}
+                    value={firstname}
                     onChange={(e) => onChange(e)}
                   />
                 </label>
                 <label className="block">
                   <span className="text-gray-700">Registration Number</span>
                   <input
-                    name="regNumber"
+                    name="userNumber"
                     type="text"
                     className="form-input mt-1 block w-full py-4 px-2"
                     placeholder="patient1234"
-                    value={regNumber}
+                    value={userNumber}
                     onChange={(e) => onChange(e)}
                     disabled
                   />
@@ -118,29 +112,16 @@ const PatientRegisterForm = ({ createPatient }) => {
                   </select>
                 </label>
                 <label className="block">
-                  <span className="text-gray-700">State of Origin</span>
+                  <span className="text-gray-700">Account Type</span>
                   <select
-                    name="state"
+                    name="accountType"
                     className="block w-full mt-1 py-4 px-2"
-                    value={state}
+                    value={accountType}
                     onChange={(e) => onChange(e)}
-                  >
-                    <option>Lagos</option>
-                    <option>Delta</option>
-                    <option>Ogun</option>
-                    <option>Edo</option>
-                    <option>Ibadan</option>
+                    >
+                    <option>-</option>
+                    <option>Patient</option>
                   </select>
-                </label>
-                <label className="block">
-                  <span className="text-gray-700">Occupation</span>
-                  <input
-                    name="occupation"
-                    type="text"
-                    className="mt-1 block w-full py-4 px-2"
-                    value={occupation}
-                    onChange={(e) => onChange(e)}
-                  />
                 </label>
               </div>
               {/* 2 */}
@@ -148,11 +129,11 @@ const PatientRegisterForm = ({ createPatient }) => {
                 <label className="block">
                   <span className="text-gray-700">Lastname</span>
                   <input
-                    name="lastName"
+                    name="lastname"
                     type="text"
                     className="form-input mt-1 block w-full py-4 px-2"
                     placeholder="Doe"
-                    value={lastName}
+                    value={lastname}
                     onChange={(e) => onChange(e)}
                   />
                 </label>
@@ -187,31 +168,6 @@ const PatientRegisterForm = ({ createPatient }) => {
                     className="form-input mt-1 block w-full py-4 px-2"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => onChange(e)}
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-gray-700">Nationality</span>
-                  <select
-                    name="nationality"
-                    className="block w-full mt-1 py-4 px-2"
-                    value={nationality}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option>Nigeria</option>
-                    <option>India</option>
-                    <option>USA</option>
-                    <option>China</option>
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="text-gray-700">Local Government Area</span>
-                  <input
-                    name="lga"
-                    type="text"
-                    className="form-input mt-1 block w-full py-4 px-2"
-                    placeholder="LGA"
-                    value={lga}
                     onChange={(e) => onChange(e)}
                   />
                 </label>
