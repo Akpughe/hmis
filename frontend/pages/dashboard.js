@@ -7,6 +7,7 @@ import { Card } from '../components/common';
 import { Banner, Chart, Table, newPatient, month } from '../components/common';
 import { getPatients } from '../actions/patient';
 import { loadUser } from '../actions/auth';
+import { getAppointments } from '../actions/appointment';
 
 const Viewmore = () => {
   return (
@@ -24,18 +25,18 @@ const Viewmore = () => {
 
 function Home({
   getPatients,
+  getAppointments,
   patient: { patients, loading },
+  appointment: { appointments },
+  
   loadUser,
-  auth: {
-    user,
-    isAuthenticated,
-    user: { appointment },
-  },
+  auth: { user, isAuthenticated },
 }) {
   useEffect(() => {
     getPatients();
     loadUser();
-  }, [getPatients, loadUser]);
+    getAppointments();
+  }, [getPatients, loadUser, getAppointments]);
 
   const [popMore, setPopMore] = useState(false);
 
@@ -45,7 +46,8 @@ function Home({
 
   const size = 5;
   const items = patients.slice(0, size);
-  console.log(items);
+  const appitem = appointments.slice(0, size);
+  console.log(appointments);
   return (
     <>
       <Head>
@@ -75,7 +77,7 @@ function Home({
                 <div className="mr-8">
                   <Card
                     color="bg-gradient-to-r from-indigo-800 to-indigo-400"
-                    figure="47"
+                    figure={appointments.length}
                     job="Appointments"
                   />
                 </div>
@@ -180,10 +182,10 @@ function Home({
                     </h2>
                   </div>
                   <Table>
-                    {newPatient.map((item) => {
+                    {appitem.map((item) => {
                       return (
                         <>
-                          <tr className="" key={item.id}>
+                          <tr className="" key={item._id}>
                             <td className="px-8 py-2 font-semibold text-base text-gray-500">
                               <div className="flex">
                                 <img
@@ -193,17 +195,17 @@ function Home({
                                 />
                                 <div className="flex flex-col">
                                   <div>
-                                    <h4 className="px-2 py-1">{item.name}</h4>
+                                    <h4 className="px-2 py-1">{item.user.firstname} {item.user.lastname}</h4>
                                   </div>
                                   <small className="px-2 -mt-2.5 font-light ">
-                                    {item.disease}
+                                    {item.concern}
                                   </small>
                                 </div>
                               </div>
                             </td>
                             <td>
                               <span className="cursor-pointer text-sm font-light mr-3">
-                                Female
+                                {item.user.gender}
                               </span>
                             </td>
                             <td>
@@ -254,13 +256,20 @@ function Home({
 Home.propTypes = {
   getPatients: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
+  appointment: PropTypes.object.isRequired,
   loadUser: PropTypes.func.isRequired,
+  getAppointments: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   patient: state.patient,
+  appointment: state.appointment,
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPatients, loadUser })(Home);
+export default connect(mapStateToProps, {
+  getPatients,
+  loadUser,
+  getAppointments,
+})(Home);
