@@ -121,15 +121,15 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
   const columns = [
     {
       title: 'Firstname',
-      dataIndex: 'firstName',
-      key: 'firstName',
-      ...getColumnSearchProps('firstName'),
+      dataIndex: 'firstname',
+      key: 'firstname',
+      ...getColumnSearchProps('firstname'),
     },
     {
       title: 'Lastname',
-      dataIndex: 'lastName',
-      key: 'lastName',
-      ...getColumnSearchProps('lastName'),
+      dataIndex: 'lastname',
+      key: 'lastname',
+      ...getColumnSearchProps('lastname'),
     },
     {
       title: 'Date Of Birth',
@@ -139,9 +139,9 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
     },
     {
       title: 'Patient Number',
-      dataIndex: 'regNumber',
+      dataIndex: 'userNumber',
       key: 'regNumber',
-      ...getColumnSearchProps('regNumber'),
+      ...getColumnSearchProps('userNumber'),
     },
     {
       title: 'Gender',
