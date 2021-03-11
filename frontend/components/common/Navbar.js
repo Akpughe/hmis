@@ -177,6 +177,12 @@ const Navbar = ({
             <span className="font-semibold text-base text-gray-500 ml-2">
               {user && user.accountType} {user && user.lastname}
             </span>
+            <span
+              onClick={logout}
+              className="font-semibold cursor-pointer text-base text-gray-500 ml-2"
+            >
+              Logout
+            </span>
           </div>
         </div>
       </div>
