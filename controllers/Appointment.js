@@ -21,7 +21,7 @@ exports.getAllAppoinments = async (req, res, next) => {
         errors: [{ msg: 'You do not have permission to perform this action' }],
       });
 
-    const appointments = await Appointment.find().populate('user',['lastname', 'firstname']);
+    const appointments = await Appointment.find().populate('user',['lastname', 'firstname', 'gender']);
 
     res.status(200).json(appointments);
   } catch (err) {
