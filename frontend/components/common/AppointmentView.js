@@ -56,7 +56,7 @@ const AppointmentView = ({
     },
   ];
 
-  console.log(appointments);
+  // console.log(appointments);
   return (
     <>
       <Table columns={columns} dataSource={appointments} className="w-full" />

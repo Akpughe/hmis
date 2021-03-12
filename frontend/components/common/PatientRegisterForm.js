@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { stateOfOrigin, nationality } from '../common';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';

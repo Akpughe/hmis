@@ -47,7 +47,7 @@ function Home({
   const size = 5;
   const items = patients.slice(0, size);
   const appitem = appointments.slice(0, size);
-  console.log(appointments);
+  // console.log(appointments);
   return (
     <>
       <Head>
