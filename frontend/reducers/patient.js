@@ -1,4 +1,4 @@
-import { GET_PATIENTS, PATIENT_ERROR, GET_PATIENT } from '../actions/types';
+import { GET_PATIENTS, PATIENT_ERROR, GET_PATIENT, } from '../actions/types';
 
 const initialState = {
   patient: null,
@@ -15,7 +15,7 @@ export default function Pat(state = initialState, action) {
       // case UPDATE_PROFILE:
         return {
           ...state,
-          profile: payload,
+          patient: payload,
           loading: false,
         };
     case GET_PATIENTS:
