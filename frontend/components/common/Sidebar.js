@@ -33,7 +33,7 @@ const Sidebar = ({ loadUser, auth: { user, isAuthenticated } }) => {
               {user.accountType !== 'Administrator' ? 'Reports' : 'Appointment'}
             </a>
           </Link>
-          <Link href="/doctors">
+          <Link href="/doctor">
             <a className="text-gray-500 hover:border-blue-600 border-l-4 px-5 py-4 text-sm font-medium">
               {user.accountType !== 'Administrator' ? 'Profile' : 'Doctor'}
             </a>
