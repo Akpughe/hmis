@@ -4,21 +4,25 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const Patient = require('../models/Patient');
+const Doctor = require('../models/Doctors');
 
 exports.getUserById = async (req, res, next) => {
-  const userId = req.userId
+  const userId = req.userId;
   try {
     const user = await User.findById(userId)
       .select('-password')
-      .populate('appointment', ['concern','appointmentTime', 'appointmentDate', 'appointmentNumber']);
+      .populate('appointment', [
+        'concern',
+        'appointmentTime',
+        'appointmentDate',
+        'appointmentNumber',
+      ]);
     res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 };
-
-
 
 exports.getAllUsers = async (req, res, next) => {
   const errors = validationResult(req);
@@ -40,7 +44,33 @@ exports.getAllUsers = async (req, res, next) => {
 
     const users = await User.find().select('-password');
 
-    res.status(200).json({ msg: 'Fetched users successfully', users });
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Sever Error' });
+  }
+};
+exports.getAllDocs = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const adminId = req.userId;
+
+  try {
+    let admin = await User.findById(adminId);
+    if (!admin)
+      return res.status(404).json({ errors: [{ msg: 'User does not exist' }] });
+
+    if (admin.accountType !== 'Administrator')
+      return res.status(404).json({
+        errors: [{ msg: 'You do not have permission to perform this action' }],
+      });
+
+    const doctors = await Doctor.find().select('-password');
+
+    res.status(200).json(doctors);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Sever Error' });
@@ -98,6 +128,7 @@ exports.register = async (req, res, next) => {
       userNumber: newUserNumber,
     });
     let patient = await Patient.find();
+    let doctor = await Doctor.find();
 
     if (user) {
       return res
@@ -138,10 +169,25 @@ exports.register = async (req, res, next) => {
         accountType,
         address,
       });
+      await patient.save();
+      await user.save();
+    } else if (accountType === 'Doctor') {
+      doctor = new Doctor({
+        firstname,
+        lastname,
+        email,
+        phoneNumber,
+        maritalStatus,
+        dateOfBirth,
+        gender,
+        password: encryptedPassword,
+        userNumber: newUserNumber,
+        accountType,
+        address,
+      });
+      await doctor.save();
+      await user.save();
     }
-
-    await patient.save();
-    await user.save();
 
     res.json({ msg: 'User created successfully' + ' ' + newUserNumber });
   } catch (err) {
