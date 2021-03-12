@@ -138,9 +138,9 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       ...getColumnSearchProps('dateOfBirth'),
     },
     {
-      title: 'Patient Number',
+      title: 'Staff Number',
       dataIndex: 'userNumber',
-      key: 'regNumber',
+      key: 'userNumber',
       ...getColumnSearchProps('userNumber'),
     },
     {
