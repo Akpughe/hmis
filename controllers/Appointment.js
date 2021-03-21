@@ -32,16 +32,9 @@ exports.getAllAppoinments = async (req, res, next) => {
 
 exports.getAppointmentById = async (req, res, next) => {
   const appointmentId = req.appointmentId;
-<<<<<<< HEAD
   try {
     const appointment = await Appointment.findOne(appointmentId);
     res.json([appointment]);
-=======
-  const userId = req.userId;
-  try {
-    const appointment = await Appointment.findById(userId);
-    res.json(appointment);
->>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

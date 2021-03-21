@@ -9,20 +9,10 @@ const Doctor = require('../models/Doctors');
 exports.getUserById = async (req, res, next) => {
   const userId = req.userId;
   try {
-<<<<<<< HEAD
     const user = await User.findById(req.userId)
       .select('-password')
       .populate('appointment', [
         'appointmentTime, appointmentDate, concern, appointmentNumber',
-=======
-    const user = await User.findById(userId)
-      .select('-password')
-      .populate('appointment', [
-        'concern',
-        'appointmentTime',
-        'appointmentDate',
-        'appointmentNumber',
->>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
       ]);
     res.json(user);
   } catch (err) {

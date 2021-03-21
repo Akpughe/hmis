@@ -7,11 +7,7 @@ const isAuth = require('../middleware/auth');
 
 const router = express.Router();
 
-<<<<<<< HEAD
-router.get('/get-by-id', isAuth ,appointmentController.getAppointmentById);
-=======
 router.get('/get-by-id/:id', isAuth ,appointmentController.getAppointmentById);
->>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
 router.get('/get-all-appointments', isAuth ,appointmentController.getAllAppoinments);
 
 router.post(
