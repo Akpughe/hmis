@@ -28,40 +28,38 @@ export const loadUser = () => async (dispatch) => {
 };
 
 //LOGIN USER
-export const login = (staffNumber, password) => async dispatch => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-  
-    const body = JSON.stringify({ staffNumber, password });
-  
-    try {
-      const res = await axios.post('/api/user/login', body, config);
-  
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
- 
-      dispatch(loadUser());
-    } catch (err) {
-      const errors = err.response.data.errors;
-  
-      if (errors) {
-        errors.forEach(error => dispatch(console.log('error')));
-      }
-      dispatch({
-        type: LOGIN_FAIL
-      });
-    }
+export const login = (userNumber, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
   };
 
+  const body = JSON.stringify({ userNumber, password });
 
-  export const logout = () => dispatch => {
+  try {
+    const res = await axios.post('/api/user/login', body, config);
+
     dispatch({
-      type: LOGOUT
+      type: LOGIN_SUCCESS,
+      payload: res.data,
     });
-  
-  };
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(console.log('error')));
+    }
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
+};
