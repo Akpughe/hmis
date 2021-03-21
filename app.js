@@ -17,19 +17,19 @@ app.use(bodyParser.json());
 
 app.use(express.json({ extended: false }));
 
-let whitelist = ['http://localhost:3000'];
-let corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-app.use(cors(corsOptions));
+// let whitelist = ['http://localhost:3000'];
+// let corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+// app.use(cors(corsOptions));
 
-app.use(cors());
+// app.use(cors());
 
 app.get('/', (req, res, next) => res.send('API Running...'));
 
