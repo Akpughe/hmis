@@ -7,7 +7,11 @@ const Patient = require('../models/Patient');
 
 exports.getUserById = async (req, res, next) => {
   try {
-    const user = await User.findById(req.userId).select('-password');
+    const user = await User.findById(req.userId)
+      .select('-password')
+      .populate('appointment', [
+        'appointmentTime, appointmentDate, concern, appointmentNumber',
+      ]);
     res.json(user);
   } catch (err) {
     console.error(err.message);
