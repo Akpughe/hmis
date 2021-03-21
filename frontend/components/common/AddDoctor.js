@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import { createPatient } from '../../actions/patient';
 
-const PatientRegisterForm = ({ createPatient }) => {
+const AddDoctor = ({createPatient}) => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -45,9 +45,9 @@ const PatientRegisterForm = ({ createPatient }) => {
       <div className="mb-20">
         <div className="max-w-xl mx-auto md:max-w-4xl">
           {/* <h2 className="text-2xl font-bold">Patient Form</h2>
-          <p className="mt-2 text-lg text-gray-500">
-            Fill all the details below
-          </p> */}
+        <p className="mt-2 text-lg text-gray-500">
+          Fill all the details below
+        </p> */}
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
               {/* 1 */}
@@ -117,9 +117,9 @@ const PatientRegisterForm = ({ createPatient }) => {
                     className="block w-full mt-1 py-4 px-2"
                     value={accountType}
                     onChange={(e) => onChange(e)}
-                    >
+                  >
                     <option>-</option>
-                    <option>Patient</option>
+                    <option>Doctor</option>
                   </select>
                 </label>
               </div>
@@ -198,10 +198,11 @@ const PatientRegisterForm = ({ createPatient }) => {
   );
 };
 
-PatientRegisterForm.propTypes = {
+AddDoctor.propTypes = {
   createPatient: PropTypes.func.isRequired,
 };
 
 export default connect(null, { createPatient })(
-  withRouter(PatientRegisterForm)
-);
+    withRouter(AddDoctor)
+  );
+  

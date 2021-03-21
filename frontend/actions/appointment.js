@@ -37,7 +37,11 @@ export const createAppointment = (formData) => async (dispatch) => {
 
     dispatch(alert('appointment created'));
   } catch (err) {
+<<<<<<< HEAD
     const errors = err.response.data.errors;
+=======
+    const errors = 'error';
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
 
     if (errors) {
       // errors.forEach((error) => dispatch(alert('danger')));

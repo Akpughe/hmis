@@ -11,6 +11,10 @@ const AppointmentView = ({
     patient,
     appointments,
     loading,
+<<<<<<< HEAD
+=======
+    user,
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   },
 }) => {
   useEffect(() => {
@@ -30,8 +34,13 @@ const AppointmentView = ({
     },
     {
       title: 'Patient',
+<<<<<<< HEAD
       dataIndex: 'lastName',
       key: 'lastName',
+=======
+      dataIndex: 'lastname',
+      key: 'lastname',
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
     },
     {
       title: 'Appointment Nø',
@@ -48,9 +57,20 @@ const AppointmentView = ({
       dataIndex: 'concern',
       key: 'concern',
     },
+<<<<<<< HEAD
   ];
 
   console.log(patient);
+=======
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
+  ];
+
+  // console.log(appointments);
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   return (
     <>
       <Table columns={columns} dataSource={appointments} className="w-full" />

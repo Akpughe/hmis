@@ -7,6 +7,10 @@ import { Card } from '../components/common';
 import { Banner, Chart, Table, newPatient, month } from '../components/common';
 import { getPatients } from '../actions/patient';
 import { loadUser } from '../actions/auth';
+<<<<<<< HEAD
+=======
+import { getAppointments } from '../actions/appointment';
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
 
 const Viewmore = () => {
   return (
@@ -24,14 +28,26 @@ const Viewmore = () => {
 
 function Home({
   getPatients,
+<<<<<<< HEAD
   patient: { patients, loading },
+=======
+  getAppointments,
+  patient: { patients, loading },
+  appointment: { appointments },
+  
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   loadUser,
   auth: { user, isAuthenticated },
 }) {
   useEffect(() => {
     getPatients();
     loadUser();
+<<<<<<< HEAD
   }, [getPatients, loadUser]);
+=======
+    getAppointments();
+  }, [getPatients, loadUser, getAppointments]);
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
 
   const [popMore, setPopMore] = useState(false);
 
@@ -41,7 +57,12 @@ function Home({
 
   const size = 5;
   const items = patients.slice(0, size);
+<<<<<<< HEAD
   console.log(user);
+=======
+  const appitem = appointments.slice(0, size);
+  // console.log(appointments);
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   return (
     <>
       <Head>
@@ -71,7 +92,11 @@ function Home({
                 <div className="mr-8">
                   <Card
                     color="bg-gradient-to-r from-indigo-800 to-indigo-400"
+<<<<<<< HEAD
                     figure="47"
+=======
+                    figure={appointments.length}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                     job="Appointments"
                   />
                 </div>
@@ -139,11 +164,19 @@ function Home({
                                     <div className="flex flex-col">
                                       <div>
                                         <h4 className="px-2 py-1">
+<<<<<<< HEAD
                                           {item.firstName} {item.lastName}
                                         </h4>
                                       </div>
                                       <small className="px-2 -mt-2.5 font-light ">
                                         {item.regNumber}
+=======
+                                          {item.firstname} {item.lastname}
+                                        </h4>
+                                      </div>
+                                      <small className="px-2 -mt-2.5 font-light ">
+                                        {item.userNumber}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                                       </small>
                                     </div>
                                   </div>
@@ -176,10 +209,17 @@ function Home({
                     </h2>
                   </div>
                   <Table>
+<<<<<<< HEAD
                     {newPatient.map((item) => {
                       return (
                         <>
                           <tr className="" key={item.id}>
+=======
+                    {appitem.map((item) => {
+                      return (
+                        <>
+                          <tr className="" key={item._id}>
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                             <td className="px-8 py-2 font-semibold text-base text-gray-500">
                               <div className="flex">
                                 <img
@@ -189,17 +229,28 @@ function Home({
                                 />
                                 <div className="flex flex-col">
                                   <div>
+<<<<<<< HEAD
                                     <h4 className="px-2 py-1">{item.name}</h4>
                                   </div>
                                   <small className="px-2 -mt-2.5 font-light ">
                                     {item.disease}
+=======
+                                    <h4 className="px-2 py-1">{item.user.firstname} {item.user.lastname}</h4>
+                                  </div>
+                                  <small className="px-2 -mt-2.5 font-light ">
+                                    {item.concern}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                                   </small>
                                 </div>
                               </div>
                             </td>
                             <td>
                               <span className="cursor-pointer text-sm font-light mr-3">
+<<<<<<< HEAD
                                 Female
+=======
+                                {item.user.gender}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                               </span>
                             </td>
                             <td>
@@ -250,13 +301,31 @@ function Home({
 Home.propTypes = {
   getPatients: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
+<<<<<<< HEAD
   loadUser: PropTypes.func.isRequired,
+=======
+  appointment: PropTypes.object.isRequired,
+  loadUser: PropTypes.func.isRequired,
+  getAppointments: PropTypes.func.isRequired,
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   patient: state.patient,
+<<<<<<< HEAD
   auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getPatients, loadUser })(Home);
+=======
+  appointment: state.appointment,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {
+  getPatients,
+  loadUser,
+  getAppointments,
+})(Home);
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f

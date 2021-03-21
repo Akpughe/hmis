@@ -5,6 +5,10 @@ var PatientVitalsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Patient',
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   temperature: {
     type: String,
     required: true,

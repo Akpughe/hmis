@@ -16,7 +16,11 @@ const MainLayout = ({
   return (
     <>
       <div className="w-full flex-grow h-full">
+<<<<<<< HEAD
         {user.accounType !== 'Patient' ? '' : <Navbar />}
+=======
+        {user.accounType !== 'Patient' ? <Navbar/> : <Navbar />}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
         <div className="flex">
           <Sidebar />
           {children}

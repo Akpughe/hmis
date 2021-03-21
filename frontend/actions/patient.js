@@ -1,6 +1,23 @@
 import axios from 'axios';
-import { GET_PATIENTS, PATIENT_ERROR, GET_PATIENT } from './types';
+import { GET_PATIENTS, PATIENT_ERROR, GET_PATIENT,  } from './types';
 
+
+export const getUsers = () => async (dispatch) => {
+  // dispatch({type: CLEAR_PROFILE})
+  try {
+    const res = await axios.get('/api/user/get-all-users');
+
+    dispatch({
+      type: GET_PATIENTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PATIENT_ERROR,
+      payload: { msg: "err.response.statusText", status: "err.response.status" },
+    });
+  }
+};
 export const getPatients = () => async (dispatch) => {
   // dispatch({type: CLEAR_PROFILE})
   try {
@@ -56,7 +73,7 @@ export const createPatient = (formData, history, edit = false) => async (
       history.push('/dashboard');
     }
   } catch (err) {
-    // const errors = err.response.data.errors;
+    const errors = 'error';
 
     if (errors) {
       // errors.forEach((error) => dispatch( ('danger')));
@@ -64,7 +81,7 @@ export const createPatient = (formData, history, edit = false) => async (
     }
     dispatch({
       type: PATIENT_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: "err.response.statusText", status: "err.response.status" },
     });
   }
 };

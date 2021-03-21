@@ -11,9 +11,15 @@ const schedule = ({
   auth: {
     user,
     isAuthenticated,
+<<<<<<< HEAD
     user: { appointmentTime, appointmentDate, appointmentNumber, concern },
   },
   appointment: { appointments },
+=======
+    user: { appointment },
+  },
+  // appointment: { appointments },
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
 }) => {
   const [alert, setAlert] = useState(true);
 
@@ -26,7 +32,11 @@ const schedule = ({
 
     return () => clearTimeout(timer);
   }, [loadUser, myAppointments]);
+<<<<<<< HEAD
   console.log(user);
+=======
+  // console.log(appointment);
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
   return (
     <>
       <MainLayout>
@@ -51,19 +61,33 @@ const schedule = ({
               <h2>Status</h2>
             </div>
           </div>
+<<<<<<< HEAD
           <div className="flex justify-between bg-white shadow-xl rounded-md border mr-4 mt-5 pr-20 pl-4 py-4 text-sm font-medium">
             {appointments.map((item, index) => {
               return (
+=======
+          {appointment.map((item, index) => {
+            return (
+              <div key={item._id} className="flex justify-between bg-white shadow-xl rounded-md border mr-4 mt-5 pr-20 pl-4 py-4 text-sm font-medium">
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                 <>
                   <div>
                     <h2>{item.appointmentTime}</h2>
                   </div>
                   <div className="flex">
+<<<<<<< HEAD
                     {alert && (
                       <span className="bg-blue-200 px-2 py-1 mb-2 mr-2 rounded text-xs ">
                         New
                       </span>
                     )}
+=======
+                    {/* {alert && (
+                      <span className="bg-blue-200 px-2 py-1 mb-2 mr-2 rounded text-xs ">
+                        New
+                      </span>
+                    )} */}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
                     <h2>{item.appointmentDate}</h2>
                   </div>
                   <div>
@@ -78,9 +102,15 @@ const schedule = ({
                     </button>
                   </div>
                 </>
+<<<<<<< HEAD
               );
             })}
           </div>
+=======
+              </div>
+            );
+          })}
+>>>>>>> 95f11d63a115ebab00424479156ece426e1fb78f
         </div>
       </MainLayout>
     </>

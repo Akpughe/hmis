@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getPatients } from '../../actions/patient';
+import { getDocs } from '../../actions/doctor';
 import { Table, Tag, Space, Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
-const Pop = ({ handleClick }) => {
-  return (
-    <>
-      <div>
-        <h1>This is a pop-up</h1>
-        <h3 onClick={handleClick}>close</h3>
-      </div>
-    </>
-  );
-};
-
-const PatientView = ({ getPatients, patient: { patients, loading } }) => {
-  const [pop, setPop] = useState(false);
+const ViewDoctors = ({ getDocs, doctor: { doctors, loading } }) => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
 
@@ -138,9 +126,9 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       ...getColumnSearchProps('dateOfBirth'),
     },
     {
-      title: 'Staff Number',
+      title: 'Patient Number',
       dataIndex: 'userNumber',
-      key: 'userNumber',
+      key: 'regNumber',
       ...getColumnSearchProps('userNumber'),
     },
     {
@@ -150,20 +138,13 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       ...getColumnSearchProps('gender'),
     },
   ];
-
   useEffect(() => {
-    getPatients();
-  }, [getPatients]);
+    getDocs();
+  }, [getDocs]);
 
-  const handleClick = () => {
-    setPop(!pop);
-  };
-
-  // console.log();
-
+  console.log(doctors);
   return (
     <>
-      {pop && <Pop pop={pop} handleClick={handleClick} />}
       {loading ? (
         <h1>Loading...</h1>
       ) : (
@@ -171,14 +152,14 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                alert('clicked');
+                alert(doctors);
               }, // click row
             };
           }}
-          dataSource={patients}
+          dataSource={doctors}
           columns={columns}
           loading={false}
-          onClick={handleClick}
+          // onClick={handleClick}
           size="large"
           className="shadow-xl"
         />
@@ -187,14 +168,13 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
   );
 };
 
-PatientView.propTypes = {
-  getPatients: PropTypes.func.isRequired,
-  patient: PropTypes.object.isRequired,
+ViewDoctors.propTypes = {
+  getDocs: PropTypes.func.isRequired,
+  doctor: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  patient: state.patient,
+  doctor: state.doctor,
 });
 
-export default connect(mapStateToProps, { getPatients })(PatientView);
-// export default PatientView;
+export default connect(mapStateToProps, { getDocs })(ViewDoctors);

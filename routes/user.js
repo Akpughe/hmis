@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', isAuth, userController.getUserById)
 
 router.get('/get-all-users', isAuth ,userController.getAllUsers);
+router.get('/get-all-docs', isAuth ,userController.getAllDocs);
 
 router.post(
   '/register',

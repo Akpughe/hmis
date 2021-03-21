@@ -1,4 +1,5 @@
 const Patient = require('../models/Patient');
+const User = require('../models/User');
 const PatientVitals = require('../models/PatientVitals');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
