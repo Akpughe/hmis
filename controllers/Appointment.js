@@ -30,7 +30,16 @@ exports.getAllAppoinments = async (req, res, next) => {
   }
 };
 
-exports.getAppointmentById = async (req, res, next) => {};
+exports.getAppointmentById = async (req, res, next) => {
+  const appointmentId = req.appointmentId;
+  try {
+    const appointment = await Appointment.findOne(appointmentId);
+    res.json([appointment]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
 
 exports.bookAppointment = async (req, res, next) => {
   const errors = validationResult(req);
@@ -57,7 +66,7 @@ exports.bookAppointment = async (req, res, next) => {
   const patientId = req.patientId;
   try {
     const user = await User.findById(userId);
-    // const patient = await Patient.find();
+    const patient = await Patient.findOne(patientId);
     if (!user)
       return res.status(404).json({ errors: [{ msg: 'account not found' }] });
 
@@ -70,10 +79,12 @@ exports.bookAppointment = async (req, res, next) => {
     });
 
     user.appointment.push(appointment._id);
+
     // patient.appointment.push(appointment._id);
 
     await appointment.save();
     await user.save();
+    await patient.save();
 
     res
       .status(201)
