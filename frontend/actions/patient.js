@@ -43,7 +43,7 @@ export const createPatient = (formData, history, edit = false) => async (
       headers: { 'Content-Type': 'application/json' },
     };
 
-    const res = await axios.post('/api/patient/register', formData, config);
+    const res = await axios.post('/api/user/register', formData, config);
 
     dispatch({
       type: GET_PATIENT,
@@ -59,7 +59,7 @@ export const createPatient = (formData, history, edit = false) => async (
     // const errors = err.response.data.errors;
 
     if (errors) {
-      // errors.forEach((error) => dispatch(alert('danger')));
+      // errors.forEach((error) => dispatch( ('danger')));
       alert('danger');
     }
     dispatch({
