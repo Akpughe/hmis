@@ -16,12 +16,21 @@ exports.getAllAppoinments = async (req, res, next) => {
     if (!admin)
       return res.status(404).json({ errors: [{ msg: 'User does not exist' }] });
 
-    if (admin.accountType !== 'Administrator')
-      return res.status(404).json({
-        errors: [{ msg: 'You do not have permission to perform this action' }],
-      });
+    if (admin.accountType !== 'Administrator') {
+      if (admin.accountType !== 'Doctor') {
+        return res.status(404).json({
+          errors: [
+            { msg: 'You do not have permission to perform this action' },
+          ],
+        });
+      }
+    }
 
-    const appointments = await Appointment.find().populate('user',['lastname', 'firstname', 'gender']);
+    const appointments = await Appointment.find().populate('user', [
+      'lastname',
+      'firstname',
+      'gender',
+    ]);
 
     res.status(200).json(appointments);
   } catch (err) {
