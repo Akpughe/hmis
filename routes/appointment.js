@@ -7,6 +7,7 @@ const isAuth = require('../middleware/auth');
 
 const router = express.Router();
 
+router.get('/get-by-id', isAuth ,appointmentController.getAppointmentById);
 router.get('/get-all-appointments', isAuth ,appointmentController.getAllAppoinments);
 
 router.post(
