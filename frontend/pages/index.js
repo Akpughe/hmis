@@ -9,17 +9,17 @@ import { useRouter } from 'next/router';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    staffnumber: '',
+    userNumber: '',
     password: '',
   });
-  const { staffnumber, password } = formData;
+  const { userNumber, password } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(staffnumber, password);
+    login(userNumber, password);
     console.log('SUCCESS');
   };
 
@@ -54,16 +54,16 @@ const Login = ({ login, isAuthenticated }) => {
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="staffNumber" className="sr-only">
-                  Staff Number
+                  User Number
                 </label>
                 <input
-                  name="staffnumber"
+                  name="userNumber"
                   type="text"
-                  value={staffnumber}
+                  value={userNumber}
                   onChange={(e) => onChange(e)}
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Staff Number"
+                  placeholder="User Number"
                 />
               </div>
               <div>
