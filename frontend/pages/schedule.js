@@ -13,7 +13,7 @@ const schedule = ({
     isAuthenticated,
     user: { appointment },
   },
-  // appointment: { appointments },
+  appointment: { appointments },
 }) => {
   const [alert, setAlert] = useState(true);
 
@@ -26,7 +26,7 @@ const schedule = ({
 
     return () => clearTimeout(timer);
   }, [loadUser, myAppointments]);
-  // console.log(appointment);
+  console.log(appointment);
   return (
     <>
       <MainLayout>
@@ -53,7 +53,10 @@ const schedule = ({
           </div>
           {appointment.map((item, index) => {
             return (
-              <div key={item._id} className="flex justify-between bg-white shadow-xl rounded-md border mr-4 mt-5 pr-20 pl-4 py-4 text-sm font-medium">
+              <div
+                key={item._id}
+                className="flex justify-between bg-white shadow-xl rounded-md border mr-4 mt-5 pr-20 pl-4 py-4 text-sm font-medium"
+              >
                 <>
                   <div>
                     <h2>{item.appointmentTime}</h2>
