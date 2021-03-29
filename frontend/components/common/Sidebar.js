@@ -33,9 +33,11 @@ const Sidebar = ({ loadUser, auth: { user, isAuthenticated } }) => {
               {user.accountType !== 'Administrator' ? 'Reports' : 'Appointment'}
             </a>
           </Link>
-          <Link href="/doctor">
+          <Link href={user.accountType === 'Administrator' ? '/doctor' : user.accountType === 'Patient' ? '/profile' : user.accountType === 'Doctor' ? '/appointments' : ''}>
             <a className="text-gray-500 hover:border-blue-600 border-l-4 px-5 py-4 text-sm font-medium">
-              {user.accountType !== 'Administrator' ? 'Profile' : 'Doctor'}
+              {/* {user.accountType !== 'Administrator' ? 'Profile' : 'Doctor'} */}
+              {user.accountType === 'Administrator' ? 'Doctor' : user.accountType === 'Patient' ? 'Profile' : user.accountType === 'Doctor' ? 'Appointments' : ''}
+
             </a>
           </Link>
           <Link href={user.accountType === 'Administrator' ? '/appointment' : user.accountType === 'Patient' ? '/schedule' : user.accountType === 'Doctor' ? '/dap' : ''}>
