@@ -16,7 +16,7 @@ const MainLayout = ({
   return (
     <>
       <div className="w-full flex-grow h-full">
-        {user.accounType !== 'Patient' ? <Navbar/> : <Navbar />}
+        <Navbar />
         <div className="flex">
           <Sidebar />
           {children}
