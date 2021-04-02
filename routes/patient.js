@@ -11,7 +11,7 @@ router.get('/get-all-patients', patientController.getAllPatients);
 
 router.get('/', isAuth ,patientController.getPatientById)
 
-router.get('/get-by-id/:patientId', patientController.getPatientById);
+router.get('/:patientId', patientController.getPatientsById);
 
 // router.post(
 //   '/register',

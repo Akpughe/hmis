@@ -19,6 +19,19 @@ exports.getUserById = async (req, res, next) => {
   }
 };
 
+exports.getUsersById = async (req, res, next) => {
+  const userId = req.userId;
+  try {
+    const puser = await User.findById(req.params.userId)
+      .select('-password')
+      .populate('appointment');
+    res.json(puser);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
 exports.getAllUsers = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

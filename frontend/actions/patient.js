@@ -35,9 +35,9 @@ export const getPatients = () => async (dispatch) => {
   }
 };
 
-export const getPatientById = (patientId) => async (dispatch) => {
+export const getPatientById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/patient/get-by-id/${patientId}`);
+    const res = await axios.get(`/api/patient/${userId}`);
 
     dispatch({
       type: GET_PATIENT,
@@ -48,7 +48,7 @@ export const getPatientById = (patientId) => async (dispatch) => {
       type: PATIENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
-    console.log(patientId);
+    console.log(userId);
   }
 };
 

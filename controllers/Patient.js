@@ -35,6 +35,23 @@ exports.getPatientById = async (req, res, next) => {
     res.status(500).send('Server Error');
   }
 };
+exports.getPatientsById = async (req, res, next) => {
+  const patientId = req.patientId;
+  try {
+    const patient = await Patient.findById(
+      req.params.patientId
+    ).populate('patient', ['firstName', 'lastName', 'regNumber']);
+    if (!patient) return res.status(400).json({ msg: 'patient not found' });
+
+    res.json(patient);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Patient not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+};
 
 exports.registerPatient = async (req, res, next) => {
   const errors = validationResult(req);

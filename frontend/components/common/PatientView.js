@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getPatients } from '../../actions/patient';
-import { Table, Tag, Space, Input, Button } from 'antd';
+import { getPatients, getPatientById } from '../../actions/patient';
+import { Table, Tag, Space, Input, Button, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import Link from 'next/link';
+import axios from 'axios';
 
 const Pop = ({ handleClick }) => {
   return (
@@ -17,10 +19,17 @@ const Pop = ({ handleClick }) => {
   );
 };
 
-const PatientView = ({ getPatients, patient: { patients, loading } }) => {
+const PatientView = ({
+  getPatients,
+  patient: { _id, patient, patients, loading },
+  getPatientById,
+  match,
+}) => {
   const [pop, setPop] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [patientViewed, setPatientViewed] = useState(null);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -118,6 +127,22 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       ),
   });
 
+  const getPatient = async (id) => {
+    try {
+      const { data } = await axios.get(`/api/patient/${id}`);
+
+      const patient = data;
+
+      console.log(patient);
+
+      setPatientViewed(patient);
+
+      setShowModal(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const columns = [
     {
       title: 'Firstname',
@@ -149,17 +174,26 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
       key: 'gender',
       ...getColumnSearchProps('gender'),
     },
+    {
+      title: 'Actions',
+      dataIndex: '_id',
+      key: '_id',
+      render: (id) => (
+        <Button onClick={() => getPatient(id)}>View Patient</Button>
+      ),
+    },
   ];
 
   useEffect(() => {
     getPatients();
-  }, [getPatients]);
+    getPatientById();
+  }, [getPatients, getPatientById]);
 
   const handleClick = () => {
     setPop(!pop);
   };
 
-  // console.log();
+  console.log();
 
   return (
     <>
@@ -168,13 +202,13 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
         <h1>Loading...</h1>
       ) : (
         <Table
-          onRow={(record, rowIndex) => {
-            return {
-              onClick: (event) => {
-                alert('clicked');
-              }, // click row
-            };
-          }}
+          // onRow={(record, rowIndex) => {
+          //   return {
+          //     onClick: (event) => {
+          //       alert(patient);
+          //     }, // click row
+          //   };
+          // }}
           dataSource={patients}
           columns={columns}
           loading={false}
@@ -183,12 +217,24 @@ const PatientView = ({ getPatients, patient: { patients, loading } }) => {
           className="shadow-xl"
         />
       )}
+
+      <Modal
+        visible={showModal}
+        closable
+        maskClosable
+        footer={null}
+        centered
+        onCancel={()=>setShowModal(false)}
+      >
+        {patientViewed && <p>{patientViewed.userNumber}</p>}
+      </Modal>
     </>
   );
 };
 
 PatientView.propTypes = {
   getPatients: PropTypes.func.isRequired,
+  getPatientById: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
 };
 
@@ -196,5 +242,7 @@ const mapStateToProps = (state) => ({
   patient: state.patient,
 });
 
-export default connect(mapStateToProps, { getPatients })(PatientView);
+export default connect(mapStateToProps, { getPatients, getPatientById })(
+  PatientView
+);
 // export default PatientView;
