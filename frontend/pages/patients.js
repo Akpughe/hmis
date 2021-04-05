@@ -8,7 +8,7 @@ import {
 
 const patients = () => {
   const [show, setShow] = useState(false);
-  const [showP, setShowP] = useState(false);
+  const [showP, setShowP] = useState(true);
 
   const handleShow = () => {
     setShow(!show);
