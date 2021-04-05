@@ -40,4 +40,16 @@ router.post(
   userController.login
 );
 
+router.post(
+  '/vitals',
+  isAuth,
+  [
+    check('temperature', 'Temperature is required').not().isEmpty(),
+    check('bloodPressure', 'Blood Pressure is required').not().isEmpty(),
+    check('weight', 'Weight is required').not().isEmpty(),
+    check('height', 'Height is required').not().isEmpty(),
+  ],
+  userController.vitals
+);
+
 module.exports = router;
