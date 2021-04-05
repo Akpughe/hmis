@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
 var PatientVitalsSchema = new mongoose.Schema({
-  patient: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Patient',
-  },
-  user: {
+  // patient: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Patient',
+  // },
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },

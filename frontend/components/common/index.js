@@ -10,6 +10,7 @@ import AppointmentView from './AppointmentView';
 import BookMe from './BookMe';
 import AddDoctor from './AddDoctor';
 import ViewDoctors from './ViewDoctors';
+import EnterVitals from './EnterVitals'
 import {
   newPatient,
   month,
@@ -37,5 +38,6 @@ export {
   AppointmentView,
   BookMe,
   AddDoctor,
-  ViewDoctors
+  ViewDoctors,
+  EnterVitals
 };

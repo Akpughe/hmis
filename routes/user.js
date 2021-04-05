@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', isAuth, userController.getUserById)
 
-router.get('/get-all-users', isAuth ,userController.getAllUsers);
+router.get('/get-all-users',userController.getAllUsers);
 router.get('/get-all-docs', isAuth ,userController.getAllDocs);
 router.get('/:userId', userController.getUsersById);
 
@@ -48,6 +48,8 @@ router.post(
     check('bloodPressure', 'Blood Pressure is required').not().isEmpty(),
     check('weight', 'Weight is required').not().isEmpty(),
     check('height', 'Height is required').not().isEmpty(),
+    check('userId', 'User is required').not().isEmpty(),
+
   ],
   userController.vitals
 );

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+  patient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Patient',
+  },
   firstname: {
     type: String,
     required: true,
@@ -60,6 +64,12 @@ const UserSchema = new mongoose.Schema({
       ref: 'PatientVitals',
     },
   ],
+  healthR :[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'HealthR'
+    },
+  ]
 });
 
 module.exports = User = mongoose.model('User', UserSchema);

@@ -37,7 +37,7 @@ export const getPatients = () => async (dispatch) => {
 
 export const getPatientById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/patient/${userId}`);
+    const res = await axios.get(`/api/user/${userId}`);
 
     dispatch({
       type: GET_PATIENT,
