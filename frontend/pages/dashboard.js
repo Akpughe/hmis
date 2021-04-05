@@ -28,7 +28,7 @@ function Home({
   getAppointments,
   patient: { patients, loading },
   appointment: { appointments },
-  
+
   loadUser,
   auth: { user, isAuthenticated },
 }) {
@@ -47,7 +47,7 @@ function Home({
   const size = 5;
   const items = patients.slice(0, size);
   const appitem = appointments.slice(0, size);
-  // console.log(appointments);
+  // console.log(user.accountType);
   return (
     <>
       <Head>
@@ -195,7 +195,9 @@ function Home({
                                 />
                                 <div className="flex flex-col">
                                   <div>
-                                    <h4 className="px-2 py-1">{item.user.firstname} {item.user.lastname}</h4>
+                                    <h4 className="px-2 py-1">
+                                      {item.user.firstname} {item.user.lastname}
+                                    </h4>
                                   </div>
                                   <small className="px-2 -mt-2.5 font-light ">
                                     {item.concern}
@@ -238,17 +240,47 @@ function Home({
             </div>
           </MainLayout>
         </>
-      ) : (
+      ) : user.accountType === 'Patient' ? (
         <MainLayout>
           <div className="flex flex-col flex-grow pl-80 pt-20 mb-10 bg-gray-100 h-full">
             <div className="mb-8 mt-4 flex">
               <h1 className="text-2xl text-black font-semibold">
                 Welcome, {user.lastname}
               </h1>
+              <div className="flex p-10 w-96 h-80 justify-between bg-white border rounded-3xl ">
+                <div className="main_one flex flex-1 flex-col">
+                  <div className="mb-8">
+                    <small>Date of Birth</small>
+                    <h3 className="font-semibold">{user.dateOfBirth}</h3>
+                  </div>
+                  <div className="mb-8">
+                    <small>Hospital Number</small>
+                    <h3 className="font-semibold">{user.userNumber}</h3>
+                  </div>
+                  <div className="mb-8">
+                    <small>Address</small>
+                    <h3 className="font-semibold">{user.address}</h3>
+                  </div>
+                  <div className="mb-8">
+                    <small>Marital Status</small>
+                    <h3 className="font-semibold">{user.maritalStatus}</h3>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </MainLayout>
-      )}
+      ) : user.accountType === 'Doctor' ? (
+        <MainLayout>
+          <div className="flex flex-col flex-grow pl-80 pt-20 mb-10 bg-gray-100 h-full">
+            <div className="mb-8 mt-4 flex">
+              <h1 className="text-2xl text-black font-semibold">
+                Welcome, Dr. {user.lastname}
+              </h1>
+            </div>
+          </div>
+        </MainLayout>
+      ) : null}
     </>
   );
 }
