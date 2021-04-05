@@ -5,6 +5,7 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctors');
+const PatientVitals = require('../models/PatientVitals');
 
 exports.getUserById = async (req, res, next) => {
   const userId = req.userId;
@@ -246,6 +247,52 @@ exports.login = async (req, res, next) => {
     });
   } catch (error) {
     console.error(err.message);
+    res.status(500).json({ msg: 'Sever Error' });
+  }
+};
+
+exports.vitals = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { temperature, bloodPressure, weight, height, userId } = req.body;
+
+  if (!temperature || !bloodPressure || !weight || !height || !userId)
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please fill all fields' }] });
+
+  const bmi = weight / Math.pow(height, 2);
+
+  const userIdx = req.userId;
+
+  try {
+    const user = await User.findById(userIdx);
+
+    if (!user)
+      return res.status(404).json({ errors: [{ msg: 'account not found' }] });
+
+    const patient = await User.findById(userId);
+
+    const vitals = new PatientVitals({
+      temperature,
+      bloodPressure,
+      weight,
+      height,
+      bodyMass: bmi,
+      userId,
+    });
+
+    patient.vitals.push(vitals._id);
+
+    await vitals.save();
+    await patient.save();
+
+    res.status(201).json(vitals);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ msg: 'Sever Error' });
   }
 };
