@@ -38,3 +38,11 @@ a {
   stroke-width: 1;
 }
 
+.ant-modal{
+  width: auto !important;
+}
+
+.ant-modal-content{
+  border-radius: 10px;
+}
+
