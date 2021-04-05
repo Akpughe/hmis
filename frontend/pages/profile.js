@@ -51,6 +51,27 @@ const profile = ({ loadUser, auth: { user, isAuthenticated } }) => {
                 <h3 className="font-semibold">{user.gender}</h3>
               </div>
               <div className="mb-8">
+                <small>E-mail</small>
+                <h3 className="font-semibold">{user.email}</h3>
+              </div>
+              <div className="mb-8">
+                {/* <small>Marital Status</small>
+                <h3 className="font-semibold">{user.maritalStatus}</h3> */}
+              </div>
+            </div>
+          </div>
+          {/*  */}
+          <div className="flex p-10 w-96 h-80 justify-between bg-white border rounded-3xl ">
+            <div className="main_one flex flex-1 flex-col">
+              <div className="mb-8">
+                <small>Date of Birth</small>
+                <h3 className="font-semibold">{user.dateOfBirth}</h3>
+              </div>
+              <div className="mb-8">
+                <small>Hospital Number</small>
+                <h3 className="font-semibold">{user.userNumber}</h3>
+              </div>
+              <div className="mb-8">
                 <small>Address</small>
                 <h3 className="font-semibold">{user.address}</h3>
               </div>
@@ -59,10 +80,24 @@ const profile = ({ loadUser, auth: { user, isAuthenticated } }) => {
                 <h3 className="font-semibold">{user.maritalStatus}</h3>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col items-center w-96 h-80  bg-white border rounded-lg shadow-md">
-            <div className="img h-20 w-20 rounded-full bg-gray-400"></div>
-            <h2>Marcus Rashford</h2>
+            <div className="main_one flex flex-1 flex-col text-right">
+              <div className="mb-8">
+                <small>Phone</small>
+                <h3 className="font-semibold">{user.phoneNumber}</h3>
+              </div>
+              <div className="mb-8">
+                <small>Hospital Number</small>
+                <h3 className="font-semibold">{user.gender}</h3>
+              </div>
+              <div className="mb-8">
+                <small>Address</small>
+                <h3 className="font-semibold">{user.address}</h3>
+              </div>
+              <div className="mb-8">
+                <small>Marital Status</small>
+                <h3 className="font-semibold">{user.maritalStatus}</h3>
+              </div>
+            </div>
           </div>
         </div>
       </MainLayout>
