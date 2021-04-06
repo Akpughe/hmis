@@ -7,10 +7,10 @@ const isAuth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', isAuth, userController.getUserById)
+router.get('/', isAuth, userController.getUserById);
 
-router.get('/get-all-users',userController.getAllUsers);
-router.get('/get-all-docs', isAuth ,userController.getAllDocs);
+router.get('/get-all-users', userController.getAllUsers);
+router.get('/get-all-docs', isAuth, userController.getAllDocs);
 router.get('/:userId', userController.getUsersById);
 
 router.post(
@@ -35,7 +35,10 @@ router.post(
   '/login',
   [
     check('userNumber', 'Please include a valid user number').not().isEmpty(),
-    check('password', 'Please enter a password with 5 or more characters').isLength({ min: 5 }),
+    check(
+      'password',
+      'Please enter a password with 5 or more characters'
+    ).isLength({ min: 5 }),
   ],
   userController.login
 );
@@ -49,9 +52,19 @@ router.post(
     check('weight', 'Weight is required').not().isEmpty(),
     check('height', 'Height is required').not().isEmpty(),
     check('userId', 'User is required').not().isEmpty(),
-
   ],
   userController.vitals
+);
+
+router.post(
+  '/health',
+  isAuth,
+  [
+    check('diagnosis', 'Diagnosis is required').not().isEmpty(),
+    check('prescription', 'Prescription is required').not().isEmpty(),
+    check('userId', 'User is required').not().isEmpty(),
+  ],
+  userController.healthr
 );
 
 module.exports = router;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { createVitalReport } from '../../actions/vitals';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-import { compareSync } from 'bcryptjs';
 
 const EnterVitals = ({createVitalReport,  userId}) => {
   const [formData, setFormData] = useState({

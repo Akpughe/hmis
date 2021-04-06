@@ -15,4 +15,9 @@ export const VITAL_SUCCESS = 'VITAL_SUCCESS';
 export const VITAL_ERROR = 'VITAL_ERROR';
 export const GET_VITALS = 'GET_VITALS';
 export const GET_VITAL = 'GET_VITAL';
+export const HEALTH_SUCCESS = 'HEALTH_SUCCESS';
+export const HEALTH_ERROR = 'HEALTH_ERROR';
+export const GET_HEALTH = 'GET_HEALTH';
+export const GET_HEALTHS = 'GET_HEALTHS';
+
 export const LOGOUT = 'LOGOUT';

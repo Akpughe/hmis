@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctors');
 const PatientVitals = require('../models/PatientVitals');
+const Health = require('../models/HealthR');
 
 exports.getUserById = async (req, res, next) => {
   const userId = req.userId;
@@ -42,17 +43,23 @@ exports.getAllUsers = async (req, res, next) => {
   const adminId = req.userId;
 
   try {
-    let admin = await User.findById(adminId);
-    if (!admin)
-      return res.status(404).json({ errors: [{ msg: 'User does not exist' }] });
+    // let admin = await User.findById(adminId);
+    // if (!admin)
+    //   return res.status(404).json({ errors: [{ msg: 'User does not exist' }] });
 
-    if (admin.accountType !== 'Administrator')
-      return res.status(404).json({
-        errors: [{ msg: 'You do not have permission to perform this action' }],
-      });
+    // if (admin.accountType !== 'Administrator') {
+    //   if (admin.accountType !== 'Doctor') {
+    //     return res.status(404).json({
+    //       errors: [
+    //         { msg: 'You do not have permission to perform this action' },
+    //       ],
+    //     });
+    //   }
+    // }
 
-    const users = await User.find().select('-password');
-
+    // const users = await User.find().select('-password');
+    const users = await User.find();
+    // res.json(patients);
     res.status(200).json(users);
   } catch (err) {
     console.error(err.message);
@@ -296,3 +303,47 @@ exports.vitals = async (req, res, next) => {
     res.status(500).json({ msg: 'Sever Error' });
   }
 };
+
+//
+exports.healthr = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { diagnosis, prescription, userId } = req.body;
+
+  if (!diagnosis || !prescription || !userId)
+    return res
+      .status(400)
+      .json({ errors: [{ msg: 'Please fill all fields' }] });
+
+
+  const userIdx = req.userId;
+
+  try {
+    const user = await User.findById(userIdx);
+
+    if (!user)
+      return res.status(404).json({ errors: [{ msg: 'account not found' }] });
+
+    const patient = await User.findById(userId);
+
+    const health = new Health({
+      diagnosis,
+      prescription,
+      userId,
+    });
+
+    patient.health.push(health._id);
+
+    await health.save();
+    await patient.save();
+
+    res.status(201).json(health);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: 'Sever Error' });
+  }
+};
+

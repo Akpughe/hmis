@@ -64,7 +64,7 @@ const UserSchema = new mongoose.Schema({
       ref: 'PatientVitals',
     },
   ],
-  healthR :[
+  health :[
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'HealthR'
