@@ -61,6 +61,12 @@ var DoctorSchema = new mongoose.Schema(
         ref: 'PatientVitals',
       },
     ],
+    awaiting :[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Awaiting'
+      },
+    ]
   },
   { timestamps: true }
 );

@@ -20,4 +20,6 @@ router.post(
   appointmentController.bookAppointment
 );
 
+router.post('/check-in', appointmentController.checkIn)
+
 module.exports = router;

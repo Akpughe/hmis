@@ -8,10 +8,10 @@ const Card = ({ figure, job, color }) => {
     >
       <div className="pt-4 ml-8 text-white">
         <div>
-          <h2 className="text-4xl">{figure}</h2>
+          <h2 className="text-4xl text-white">{figure}</h2>
         </div>
         <div className="mt-2">
-          <h5 className="text-sm font-normal">{job}</h5>
+          <h5 className="text-sm font-normal text-white">{job}</h5>
         </div>
       </div>
       {/* <div className="flex justify-end ">

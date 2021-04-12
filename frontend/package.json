@@ -15,6 +15,7 @@
     "moment": "^2.29.1",
     "next": "10.0.5",
     "next-redux-wrapper": "^6.0.2",
+    "nprogress": "^0.2.0",
     "react": "17.0.1",
     "react-data-table-component": "^7.0.0-alpha-5",
     "react-data-table-component-extensions": "^1.5.2",

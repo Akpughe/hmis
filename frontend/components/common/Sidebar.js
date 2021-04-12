@@ -33,24 +33,65 @@ const Sidebar = ({ loadUser, auth: { user, isAuthenticated } }) => {
               {user.accountType !== 'Administrator' ? 'Reports' : 'Appointment'}
             </a>
           </Link>
-          <Link href={user.accountType === 'Administrator' ? '/doctor' : user.accountType === 'Patient' ? '/profile' : user.accountType === 'Doctor' ? '/appointments' : ''}>
+          <Link
+            href={
+              user.accountType === 'Administrator'
+                ? '/doctor'
+                : user.accountType === 'Patient'
+                ? '/profile'
+                : user.accountType === 'Doctor'
+                ? '/patients'
+                : ''
+            }
+          >
             <a className="text-gray-500 hover:border-blue-600 border-l-4 px-5 py-4 text-sm font-medium">
               {/* {user.accountType !== 'Administrator' ? 'Profile' : 'Doctor'} */}
-              {user.accountType === 'Administrator' ? 'Doctor' : user.accountType === 'Patient' ? 'Profile' : user.accountType === 'Doctor' ? 'Appointments' : ''}
-
+              {user.accountType === 'Administrator'
+                ? 'Doctor'
+                : user.accountType === 'Patient'
+                ? 'Profile'
+                : user.accountType === 'Doctor'
+                ? 'Patient'
+                : ''}
             </a>
           </Link>
-          <Link href={user.accountType === 'Administrator' ? '/appointment' : user.accountType === 'Patient' ? '/schedule' : user.accountType === 'Doctor' ? '/dap' : ''}>
+          <Link
+            href={
+              user.accountType === 'Administrator'
+                ? '/appointment'
+                : user.accountType === 'Patient'
+                ? '/schedule'
+                : user.accountType === 'Doctor'
+                ? '/dap'
+                : ''
+            }
+          >
             <a className="text-gray-500 hover:border-blue-600 border-l-4 px-5 py-4 text-sm font-medium">
               {/* {user.accountType === 'Administrator' ? 'Schedule' : 'Nurses'} */}
-              {user.accountType === 'Administrator' ? 'Schedule' : user.accountType === 'Patient' ? 'Schedule' : user.accountType === 'Doctor' ? 'Appointments' : ''}
+              {user.accountType === 'Administrator'
+                ? 'Schedule'
+                : user.accountType === 'Patient'
+                ? 'Schedule'
+                : user.accountType === 'Doctor'
+                ? 'Appointments'
+                : ''}
             </a>
           </Link>
-          <Link href="/patients">
+          <Link
+            href={
+              user.accountType === 'Administrator' && 'Doctor'
+                ? '/patients'
+                : user.accountType === 'Patient'
+                ? '/healthr'
+                : ''
+            }
+          >
             <a className="text-gray-500 hover:border-blue-600 border-l-4 px-5 py-4 text-sm font-medium">
-              {user.accountType !== 'Administrator'
-                ? 'Health Records'
-                : 'Patients'}
+              {user.accountType === 'Administrator' && 'Doctor'
+                ? 'Patients'
+                : user.accountType === 'Patient'
+                ? 'Health Record'
+                : ''}
             </a>
           </Link>
           <Link href="/">

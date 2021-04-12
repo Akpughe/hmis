@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user');
 const patientRoutes = require('./routes/patient');
 const appointmentRoutes = require('./routes/appointment');
 
+
 const app = express();
 
 const bodyParser = require('body-parser');

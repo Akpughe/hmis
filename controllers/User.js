@@ -7,13 +7,32 @@ const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctors');
 const PatientVitals = require('../models/PatientVitals');
 const Health = require('../models/HealthR');
+const twilioConfig = require('../config');
+
+const twilioClient = require('twilio')(
+  twilioConfig.accountSID,
+  twilioConfig.authToken
+);
 
 exports.getUserById = async (req, res, next) => {
   const userId = req.userId;
   try {
     const user = await User.findById(userId)
       .select('-password')
-      .populate('appointment');
+      .populate('appointment', [
+        'appointmentTime',
+        'concern',
+        'appointmentDate',
+        'appointmentNumber',
+      ])
+      .populate('vitals', [
+        'temperature',
+        'bloodPressure',
+        'weight',
+        'height',
+        'bodyMass',
+      ]);
+    // .populate('health');
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -26,7 +45,9 @@ exports.getUsersById = async (req, res, next) => {
   try {
     const puser = await User.findById(req.params.userId)
       .select('-password')
-      .populate('appointment');
+      .populate('appointment')
+      .populate('vitals')
+      .populate('health');
     res.json(puser);
   } catch (err) {
     console.error(err.message);
@@ -83,6 +104,7 @@ exports.getAllDocs = async (req, res, next) => {
       return res.status(404).json({
         errors: [{ msg: 'You do not have permission to perform this action' }],
       });
+    pl;
 
     const doctors = await Doctor.find().select('-password');
 
@@ -229,8 +251,19 @@ exports.login = async (req, res, next) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch)
+    if (!isMatch) {
       return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
+    } else {
+      twilioClient.verify
+        .services(twilioConfig.serviceID)
+        .verifications.create({
+          to: `+234${user.phoneNumber}`,
+          channel: 'sms',
+        })
+        .then((data) => {
+          res.status(200).json({ data });
+        });
+    }
 
     const token = jwt.sign(
       {
@@ -246,6 +279,7 @@ exports.login = async (req, res, next) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        phoneNumber: user.phoneNumber,
         accountType: user.accountType,
         userNumber: user.userNumber,
         _id: user._id,
@@ -256,6 +290,32 @@ exports.login = async (req, res, next) => {
     console.error(err.message);
     res.status(500).json({ msg: 'Sever Error' });
   }
+};
+
+exports.verify = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    let user = await User.findOne({ userNumber });
+
+    if (!user)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'User Number does not exist' }] });
+
+    twilioClient.verify
+      .services(twilioConfig.serviceID)
+      .verificationChecks.create({
+        to: `+${user.phonenumber}`,
+        code: req.body.code,
+      })
+      .then((data) => {
+        res.status(200).send(data);
+      });
+  } catch (error) {}
 };
 
 exports.vitals = async (req, res, next) => {
@@ -318,7 +378,6 @@ exports.healthr = async (req, res, next) => {
       .status(400)
       .json({ errors: [{ msg: 'Please fill all fields' }] });
 
-
   const userIdx = req.userId;
 
   try {
@@ -346,4 +405,3 @@ exports.healthr = async (req, res, next) => {
     res.status(500).json({ msg: 'Sever Error' });
   }
 };
-

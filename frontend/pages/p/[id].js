@@ -8,6 +8,26 @@ import { getUsers, getPatientById } from '../../actions/patient';
 import axios from 'axios';
 import Link from 'next/link';
 
+const RecentVital = (prop) => {
+  return (
+    <>
+      <div className="flex flex-col p-10 w-96 h-80 bg-white border rounded-3xl mr-8 ">
+        <div className="main_one flex">
+          <h2 className="font-bold text-2xl">Recent Vitals</h2>
+        </div>
+        <div className="main_one flex justify-between">
+          <div className="mt-8"></div>
+          <div className="mt-8 ml-4"></div>
+        </div>
+        <div className="main_one flex justify-between">
+          <div className="mt-8"></div>
+          <div className="mt-8 ml-4"></div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const PatientDetails = (props) => {
   return (
     <>
@@ -72,17 +92,18 @@ const PatientDetails = (props) => {
             <div className="main_one flex">
               <h2 className="font-bold text-2xl">Recent Appointment</h2>
             </div>
+            
             <div className="main_one flex justify-between">
               <div className="mt-8">
                 <small>Date</small>
                 <h3 className="font-semibold">
-                  {props.user.appointment[0].appointmentTime} 
+                  {/* {props.user.appointment[0].appointmentTime} */}
                 </h3>
               </div>
               <div className="mt-8 text-right">
                 <small>Time</small>
                 <h3 className="font-semibold">
-                  {props.user.appointment[0].appointmentDate} 
+                  {/* {props.user.appointment[0].appointmentDate} */}
                 </h3>
               </div>
             </div>
@@ -90,13 +111,13 @@ const PatientDetails = (props) => {
               <div className="mt-8">
                 <small>Concern</small>
                 <h3 className="font-semibold">
-                  {props.user.appointment[0].concern} 
+                  {/* {props.user.appointment[0].concern} */}
                 </h3>
               </div>
               <div className="mt-8 text-right">
                 <small>Appointment Number</small>
                 <h3 className="font-semibold">
-                  {props.user.appointment[0].appointmentNumber}
+                  {/* {props.user.appointment[0].appointmentNumber} */}
                 </h3>
               </div>
             </div>
@@ -104,8 +125,8 @@ const PatientDetails = (props) => {
           {/* vitals */}
           <EnterVitals userId={props.user._id} />
         </div>
-        <div style={{marginLeft:"450px", marginTop:"-200px"}}>
-          <Diagnosis userId= {props.user._id} />
+        <div style={{ marginLeft: '450px', marginTop: '-200px' }}>
+          <Diagnosis userId={props.user._id} />
         </div>
       </div>
       {/* </MainLayout> */}

@@ -47,7 +47,7 @@ function Home({
   const size = 5;
   const items = patients.slice(0, size);
   const appitem = appointments.slice(0, size);
-  // console.log(user.accountType);
+  console.log(user);
   return (
     <>
       <Head>
@@ -243,27 +243,77 @@ function Home({
       ) : user.accountType === 'Patient' ? (
         <MainLayout>
           <div className="flex flex-col flex-grow pl-80 pt-20 mb-10 bg-gray-100 h-full">
-            <div className="mb-8 mt-4 flex">
+            <div className="mb-8 mt-4 flex flex-col">
               <h1 className="text-2xl text-black font-semibold">
                 Welcome, {user.lastname}
               </h1>
-              <div className="flex p-10 w-96 h-80 justify-between bg-white border rounded-3xl ">
-                <div className="main_one flex flex-1 flex-col">
-                  <div className="mb-8">
-                    <small>Date of Birth</small>
-                    <h3 className="font-semibold">{user.dateOfBirth}</h3>
+              <div className="flex mt-8">
+                {/*  */}
+                <div className="flex flex-col p-10 w-96 mr-8 h-auto justify-between bg-white border rounded-3xl ">
+                  <div className="flex">
+                    <h2 className="font-bold text-2xl mb-4">
+                      Recent Appointment
+                    </h2>
                   </div>
-                  <div className="mb-8">
-                    <small>Hospital Number</small>
-                    <h3 className="font-semibold">{user.userNumber}</h3>
+                  <div className="flex justify-between w-full ">
+                    <div className="main_one flex flex-1">
+                      <div className="flex flex-col">
+                        <div className="mb-8">
+                          <small>time</small>
+                          {/* <h3 className="font-semibold">{user.appointment[0].appointmentTime}</h3> */}
+                        </div>
+                        <div className="mb-8">
+                          <small>date</small>
+                          {/* <h3 className="font-semibold">{user.appointment[0].appointmentDate}</h3> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="main_one flex flex-1">
+                      <div className="flex flex-col">
+                        <div className="mb-8">
+                          <small>concern</small>
+                          {/* <h3 className="font-semibold">{user.appointment[0].concern}</h3> */}
+                        </div>
+                        <div className="mb-8">
+                          <small>app number</small>
+                          {/* <h3 className="font-semibold">{user.appointment[0].appointmentNumber}</h3> */}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mb-8">
-                    <small>Address</small>
-                    <h3 className="font-semibold">{user.address}</h3>
+                </div>
+                {/*  */}
+                <div className="flex flex-col p-10 w-96 h-auto justify-between bg-white border rounded-3xl ">
+                  <div className="flex">
+                    <h2 className="font-bold text-2xl mb-4">
+                      Last Vital Signs
+                    </h2>
                   </div>
-                  <div className="mb-8">
-                    <small>Marital Status</small>
-                    <h3 className="font-semibold">{user.maritalStatus}</h3>
+                  <div className="flex justify-between w-full ">
+                    <div className="main_one flex flex-1">
+                      <div className="flex flex-col">
+                        <div className="mb-8">
+                          <small>temperature</small>
+                          {/* <h3 className="font-semibold">{user.vitals[0].temperature}</h3> */}
+                        </div>
+                        <div className="mb-8">
+                          <small>blood pressure</small>
+                          {/* <h3 className="font-semibold">{user.vitals[0].bloodPressure}</h3> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="main_one flex flex-1">
+                      <div className="flex flex-col">
+                        <div className="mb-8">
+                          <small>weight</small>
+                          {/* <h3 className="font-semibold">{user.vitals[0].weight}</h3> */}
+                        </div>
+                        <div className="mb-8">
+                          <small>height</small>
+                          {/* <h3 className="font-semibold">{user.vitals[0].height}</h3> */}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -280,7 +330,9 @@ function Home({
             </div>
           </div>
         </MainLayout>
-      ) : null}
+      ) : (
+        ''
+      )}
     </>
   );
 }

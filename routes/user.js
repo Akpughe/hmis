@@ -31,6 +31,8 @@ router.post(
   userController.register
 );
 
+router.post('/verify', isAuth, userController.verify)
+
 router.post(
   '/login',
   [
