@@ -163,7 +163,6 @@ exports.register = async (req, res, next) => {
   try {
     let user = await User.findOne({
       email,
-      userNumber: newUserNumber,
     });
     let patient = await Patient.find();
     let doctor = await Doctor.find();
