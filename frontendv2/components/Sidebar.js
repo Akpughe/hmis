@@ -123,7 +123,6 @@ const Sidebar = () => {
             }
           >
             <a
-              c
               className={
                 router.pathname === '/doctors'
                   ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
@@ -193,7 +192,6 @@ const Sidebar = () => {
             <p className="font-light text-sm text-white">{user?.user?.email}</p>
           </div>
           <div className="flex w-full justify-evenly mt-5">
-
             <Link href="/setting">
               <div
                 onMouseOver={() => mouseIn2()}
