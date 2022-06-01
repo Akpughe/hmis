@@ -1,32 +1,78 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { logout, reset } from '../features/auth/authSlice';
 import MainLayout from '../components/MainLayout';
+import {
+  getTotalPatients,
+  getPatients,
+  reset,
+} from '../features/patient/patientSlice';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
-
+  const {
+    patients,
+    totalNumberofPatients,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
+  } = useSelector((state) => state.patients);
   useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
     if (!user) {
       router.push('/');
     }
-  }, [user, router]);
 
-  const onLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    router.push('/');
-  };
+    dispatch(getTotalPatients());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [user]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <MainLayout>
-      <div className="">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+      <div className="flex w-full">
+        <div className="w-full h-80 border mr-4">chart</div>
+        <div className="dashgrid_container w-full ">
+          <div className="w-full h-full border rounded-md bg-[#b2ff51]  p-5">
+            <div>
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="font-light text-lg text-gray-500">
+                    Total Patients
+                  </h3>
+                </div>
+                <div>
+                  <a className="flex justify-between w-full items-center text-xs bg-white px-2 py-1 rounded font-semibold cursor-pointer">
+                    add patient
+                  </a>
+                </div>
+              </div>
+              <h1 className="font-bold text-2xl text-black">
+                {totalNumberofPatients}
+              </h1>
+            </div>
+          </div>
+          <div className="w-full h-full border">two</div>
+          <div className="w-full h-full border">three</div>
+          <div className="w-full h-full border">four</div>
+        </div>
+      </div>
 
-        {/* <h3>Welcome {user?.user.firstname}</h3> */}
+      <div className="w-full h-96 mt-10">
+        <div className="border h-full ">table</div>
       </div>
     </MainLayout>
   );
