@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { logout, reset } from '../features/auth/authSlice';
 import { FiSearch } from 'react-icons/fi';
+import moment from 'moment-timezone';
 
 const Searchbar = () => {
   return (
@@ -38,7 +39,7 @@ const Navbar = ({}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
- 
+  const currentDate = moment.tz(moment(), 'Europe/London').format('dddd, MMM,YYYY HH:mm');
 
   return (
     <nav className="fixed h-auto w-full">
@@ -87,6 +88,11 @@ const Navbar = ({}) => {
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <p className=" font-normal ">Welcome {user?.user?.lastname}!</p>
+            <div className="flex justify-center w-1/2">
+              <p>
+                {currentDate}
+              </p>
+            </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div>
