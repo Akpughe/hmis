@@ -16,6 +16,16 @@ exports.getAllPatients = async (req, res, next) => {
   }
 };
 
+exports.getTotalPatients = async (req, res, next) => {
+  try {
+    const patients = await Patient.find();
+    res.json(patients.length);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+}
+
 exports.getPatientById = async (req, res, next) => {
   const patientId = req.patientId;
   try {
