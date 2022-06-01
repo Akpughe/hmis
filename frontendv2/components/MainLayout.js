@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
         <Navbar />
         <div className="flex">
           <Sidebar />
-          <div className="flex flex-col flex-grow pl-80 pt-20 mb-10 h-full">
+          <div className="flex flex-col flex-grow pl-64 pr-6 pt-20 mb-10 h-full">
             {children}
           </div>
         </div>
