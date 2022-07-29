@@ -7,7 +7,7 @@ import {IPatient} from '../types'
 const AddPatienthtmlForm = () => {
   const dispatch = useAppDispatch();
 
-  const [formData, setFormData] = useState<IPatient>({
+  const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     email: '',
