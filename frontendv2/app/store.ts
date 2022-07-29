@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import patientReducer from '../features/patient/patientSlice';
+import appointmentReducer from '../features/appointment/appointmentSlice';
 import {
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
@@ -11,6 +12,7 @@ export function makeStore() {
     reducer: {
       auth: authReducer,
       patients: patientReducer,
+      appointment: appointmentReducer,
     },
   });
 }
