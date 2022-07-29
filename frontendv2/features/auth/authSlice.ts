@@ -6,7 +6,25 @@ const ISSERVER = typeof window === 'undefined';
 // Get user from local storage
 const user = !ISSERVER ? JSON.parse(window.localStorage.getItem('user')) : null;
 
-const initialState = {
+export interface UserDetails {
+  _id: number;
+  userNumber: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNuber: string;
+  accountType: string;
+}
+
+export interface User {
+  user: UserDetails;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  message: any;
+}
+
+const initialState: User = {
   user: user ? user : null,
   isLoading: false,
   isError: false,
@@ -45,7 +63,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    await authService.logout();
+  await authService.logout();
 });
 
 export const authSlice = createSlice({
