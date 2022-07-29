@@ -22,6 +22,18 @@ export interface Patient{
   message: any,
 }
 
+export interface RegData{
+  firstname: string,
+  lastname: string,
+  email: string,
+  phoneNumber: string,
+  maritalStatus: string,
+  gender: string,
+  dateOfBirth: string,
+  address: string,
+  password: string
+}
+
 const initialState: Patient = {
   totalNumberofPatients: null,
   patients: [],
