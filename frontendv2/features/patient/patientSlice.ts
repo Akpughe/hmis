@@ -3,7 +3,8 @@ import patientService from './patientService';
 import { IPatient } from '../../types';
 
 export interface PatientDetails {
-  id: number;
+  _id: number;
+  userNumber: string;
   firstname: string;
   lastname: string;
   age: string;
