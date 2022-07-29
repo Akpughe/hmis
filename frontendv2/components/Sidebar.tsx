@@ -50,6 +50,8 @@ const Sidebar = () => {
     display: hover2 ? 'block' : 'none',
   };
 
+  const accountType = user?.user?.accountType;
+
   return (
     <nav className="bg-[#232123] h-screen shadow-xl w-60 fixed pt-16 ">
       <div className="p-7 h-full">
@@ -64,9 +66,7 @@ const Sidebar = () => {
               }
               // onClick={onSelected}
             >
-              {user?.user?.accountType === 'Administrator'
-                ? 'Overview'
-                : 'Dashboard'}
+              {accountType === 'Administrator' ? 'Dashboard' : 'Overview'}
             </a>
           </Link>
           <Link href="/appointments">
@@ -78,19 +78,21 @@ const Sidebar = () => {
               }
               // onClick={onSelected}
             >
-              {user?.user?.accountType === 'Administrator'
+              {accountType === 'Administrator'
                 ? 'Appointments'
-                : 'Add new'}
+                : accountType === 'Doctor'
+                ? 'Appointment'
+                : ''}
             </a>
           </Link>
           <Link
             href={
-              user?.user?.accountType === 'Administrator'
+              accountType === 'Administrator'
                 ? '/patients'
-                : user?.user?.accountType === 'Patient'
+                : accountType === 'Patient'
                 ? '/schedule'
-                : user?.user?.accountType === 'Doctor'
-                ? '/dap'
+                : accountType === 'Doctor'
+                ? '/patients'
                 : ''
             }
           >
@@ -101,24 +103,53 @@ const Sidebar = () => {
                   : `text-[#5d5d65] hover:text-white  px-5 py-4 text-sm font-light`
               }
             >
-              {/* {user?.user?.accountType === 'Administrator' ? 'Schedule' : 'Nurses'} */}
-              {user?.user?.accountType === 'Administrator'
+              {/* {accountType === 'Administrator' ? 'Schedule' : 'Nurses'} */}
+              {accountType === 'Administrator'
                 ? 'Patients'
-                : user?.user?.accountType === 'Patient'
+                : accountType === 'Patient'
                 ? 'Schedule'
-                : user?.user?.accountType === 'Doctor'
-                ? 'Appointments'
+                : accountType === 'Doctor'
+                ? 'Patients'
                 : ''}
             </a>
           </Link>
+          
           <Link
             href={
-              user?.user?.accountType === 'Administrator'
+              accountType === 'Administrator'
+                ? '/report'
+                : accountType === 'Patient'
+                ? '/healthr'
+                : accountType === 'Doctor'
+                ? '/report'
+                : ''
+            }
+          >
+            <a
+              className={
+                router.pathname === '/report'
+                  ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
+                  : `text-[#5d5d65] hover:text-white  px-5 py-4 text-sm font-light`
+              }
+            >
+              {accountType === 'Administrator'
+                ? 'Report'
+                : accountType === 'Patient'
+                ? 'Health Record'
+                : accountType === 'Doctor'
+                ? 'Reports'
+                : ''}
+            </a>
+          </Link>
+
+          <Link
+            href={
+              accountType === 'Administrator'
                 ? '/doctors'
-                : user?.user?.accountType === 'Patient'
+                : accountType === 'Patient'
                 ? '/profile'
-                : user?.user?.accountType === 'Doctor'
-                ? '/patients'
+                : accountType === 'Doctor'
+                ? ''
                 : ''
             }
           >
@@ -130,50 +161,15 @@ const Sidebar = () => {
               }
             >
               {/* {user?.accountType !== 'Administrator' ? 'Profile' : 'Doctor'} */}
-              {user?.user?.accountType === 'Administrator'
+              {accountType === 'Administrator'
                 ? 'Doctor'
-                : user?.user?.accountType === 'Patient'
+                : accountType === 'Patient'
                 ? 'Profile'
-                : user?.user?.accountType === 'Doctor'
-                ? 'Patient'
+                : accountType === 'Doctor'
+                ? ''
                 : ''}
             </a>
           </Link>
-
-          <Link
-            href={
-              user?.user?.accountType === 'Administrator' && 'Doctor'
-                ? '/report'
-                : user?.accountType === 'Patient'
-                ? '/healthr'
-                : ''
-            }
-          >
-            <a
-              className={
-                router.pathname === '/report'
-                  ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
-                  : `text-[#5d5d65] hover:text-white  px-5 py-4 text-sm font-light`
-              }
-            >
-              {user?.user?.accountType === 'Administrator' && 'Doctor'
-                ? 'Report'
-                : user?.accountType === 'Patient'
-                ? 'Health Record'
-                : ''}
-            </a>
-          </Link>
-          {/* <Link href="/setting">
-            <a
-              className={
-                router.pathname === '/setting'
-                  ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
-                  : `text-[#5d5d65] hover:text-white  px-5 py-4 text-sm font-light`
-              }
-            >
-              Settings
-            </a>
-          </Link> */}
         </div>
 
         <div className="flex flex-col h-1/2 items-center  justify-end">
