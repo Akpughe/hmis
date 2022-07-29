@@ -1,4 +1,6 @@
 export interface IPatient {
+    id: number;
+    userNumber: string;
     firstname: string;
     lastname: string
     email: string
