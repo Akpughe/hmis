@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jsCookie from "js-cookie";
 
 const API_URL = 'http://localhost:4000/api';
 
@@ -23,7 +24,8 @@ export const login = async (userData: {
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
-
+  const token = response.data.token
+  jsCookie.set('token', token);
   return response.data;
 };
 
