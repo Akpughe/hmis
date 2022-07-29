@@ -1,22 +1,27 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useRouter } from 'next/router';
 import { login, reset } from '../features/auth/authSlice';
 import {toast} from 'react-toastify';
 
+export interface LoginProps {
+  userNumber:string;
+  password:string;
+}
+
 export default function Home() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginProps>({
     userNumber: '',
     password: '',
   });
   const { userNumber, password } = formData;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const {user, isLoading, isError, isSuccess, message } = useSelector(
+  const {user, isLoading, isError, isSuccess, message } = useAppSelector(
     (state) => state.auth
   );
 
@@ -45,7 +50,7 @@ export default function Home() {
       userNumber,
       password
     }
-    dispatch(login(userData))
+    dispatch(login(userData));
   };
   return (
     <>
