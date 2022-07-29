@@ -55,7 +55,7 @@ const Dashboard = () => {
                   </h3>
                 </div>
                 <div>
-                  <a className="flex justify-between w-full items-center text-xs bg-white px-2 py-1 rounded font-semibold cursor-pointer">
+                  <a onClick={()=>router.push('/add-patient')} className="flex justify-between w-full items-center text-xs bg-white px-2 py-1 rounded font-semibold cursor-pointer">
                     add patient
                   </a>
                 </div>
