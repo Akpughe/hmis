@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Navbrand from './Navbrand';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,12 +10,12 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { logout, reset } from '../features/auth/authSlice';
 
 const Sidebar = () => {
-  const [selected, setSelected] = useState(false);
-  const [hover, setHover] = useState(false);
-  const [hover2, setHover2] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const [selected, setSelected] = useState<boolean>(false);
+  const [hover, setHover] = useState<boolean>(false);
+  const [hover2, setHover2] = useState<boolean>(false);
+  const { user } = useAppSelector((state) => state.auth);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSelected = () => {
     setSelected(!selected);
@@ -94,7 +95,6 @@ const Sidebar = () => {
             }
           >
             <a
-              c
               className={
                 router.pathname === '/patients'
                   ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
@@ -150,7 +150,6 @@ const Sidebar = () => {
             }
           >
             <a
-              c
               className={
                 router.pathname === '/report'
                   ? `text-white transition-all ease-in-out hover:text-white  bg-[#2e2d2e] px-5 py-4 text-sm font-light`
