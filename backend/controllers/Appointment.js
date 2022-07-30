@@ -30,7 +30,8 @@ exports.getAllAppoinments = async (req, res, next) => {
     const appointments = await Appointment.find().populate('user', [
       'lastname',
       'firstname',
-      'gender',
+      'phoneNumber',
+
     ]);
 
     res.status(200).json(appointments);
