@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import appointmentService from './appointmentService';
 
+export interface IUser {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+}
 export interface AppointmentDetails {
   _id: number;
   patient: number;
@@ -8,6 +14,7 @@ export interface AppointmentDetails {
   appointmentDate: string;
   appointmentTime: string;
   concern: string;
+  user: IUser;
 }
 
 export interface Appointment {
@@ -48,21 +55,21 @@ export const getAllAppointments = createAsyncThunk(
 );
 
 export const createAppointment = createAsyncThunk(
-    'appointment/createAppointment',
-    async (appointment, thunkAPI) => {
-        try {
-            return await appointmentService.createAppointments(appointment);
-        } catch (error) {
-            const message =
-            (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString();
-            return thunkAPI.rejectWithValue(message);
-        }
-        }
-)
+  'appointment/createAppointment',
+  async (appointment, thunkAPI) => {
+    try {
+      return await appointmentService.createAppointments(appointment);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const appointmentSlice = createSlice({
   name: 'appointment',
@@ -98,7 +105,7 @@ export const appointmentSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.newAppointment = null;
-      })
+      });
   },
 });
 
