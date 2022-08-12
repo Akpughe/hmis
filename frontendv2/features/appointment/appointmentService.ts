@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/api';
+const API_URL = 'https://myhmis.herokuapp.com/api';
 import { getAsync, postAsync } from '../../lib/adapter';
 
 export const getAllAppointments = async () => {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jsCookie from "js-cookie";
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = 'https://myhmis.herokuapp.com/api';
 
 export const register = async (userData) => {
   const response = await axios.post(API_URL + '/user/register', userData);

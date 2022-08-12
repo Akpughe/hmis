@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:4000/api';
+const API_URL = 'https://myhmis.herokuapp.com/api';
 
 export const getPatients = async () => {
   const response = await axios.get(API_URL + '/patient/get-all-patients');
