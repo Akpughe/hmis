@@ -16,6 +16,16 @@ exports.getAllPatients = async (req, res, next) => {
   }
 };
 
+exports.getTotalPatients = async (req, res, next) => {
+  try {
+    const patients = await Patient.find();
+    res.json(patients.length);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
 exports.getPatientById = async (req, res, next) => {
   const patientId = req.patientId;
   try {
@@ -36,11 +46,8 @@ exports.getPatientById = async (req, res, next) => {
   }
 };
 exports.getPatientsById = async (req, res, next) => {
-  const patientId = req.patientId;
   try {
-    const patient = await Patient.findById(
-      req.params.patientId
-    ).populate('patient', ['firstName', 'lastName', 'regNumber']);
+    const patient = await Patient.findById(req.params.patientId);
     if (!patient) return res.status(400).json({ msg: 'patient not found' });
 
     res.json(patient);
@@ -232,5 +239,48 @@ exports.vitals = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: 'Sever Error' });
+  }
+};
+
+exports.updatePatient = async (req, res, next) => {
+  const {
+    patientId,
+    firstname,
+    lastname,
+    email,
+    phoneNumber,
+    // password,
+    maritalStatus,
+    gender,
+    dateOfBirth,
+    address,
+  } = req.body;
+
+  try {
+    let patient = await Patient.findById(patientId);
+
+    if(patient){
+      patient.firstname = firstname || patient.firstname,
+      patient.lastname = lastname || patient.lastname,
+      patient.email = email || patient.email,
+      patient.phoneNumber = phoneNumber || patient.phoneNumber,
+      patient.maritalStatus = maritalStatus || patient.maritalStatus,
+      patient.gender = gender || patient.gender,
+      patient.dateOfBirth = dateOfBirth || patient.dateOfBirth,
+      patient.maritalStatus = maritalStatus || patient.maritalStatus
+      patient.address = address || patient.address
+    }
+
+    const updatedPatient =  await patient.save()
+
+    res.status(201).json({
+      message: 'patient updated successfully',
+      patient: updatedPatient,
+    });
+  } catch (err) {
+    console.error(err.message);
+    console.log(err);
+
+    res.status(500).send('Server Error');
   }
 };

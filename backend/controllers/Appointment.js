@@ -30,7 +30,8 @@ exports.getAllAppoinments = async (req, res, next) => {
     const appointments = await Appointment.find().populate('user', [
       'lastname',
       'firstname',
-      'gender',
+      'phoneNumber',
+
     ]);
 
     res.status(200).json(appointments);
@@ -89,7 +90,7 @@ exports.bookAppointment = async (req, res, next) => {
       user: user._id,
     });
 
-    patient.appointment.push(appointment._id);
+    // patient.appointment.push(appointment._id);
     user.appointment.push(appointment._id);
     // patient.appointmentP.push(appointment._id);
 
@@ -97,7 +98,7 @@ exports.bookAppointment = async (req, res, next) => {
 
     await appointment.save();
     await user.save();
-    await patient.save();
+    // await patient.save();
 
     res
       .status(201)

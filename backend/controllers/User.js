@@ -163,7 +163,6 @@ exports.register = async (req, res, next) => {
   try {
     let user = await User.findOne({
       email,
-      userNumber: newUserNumber,
     });
     let patient = await Patient.find();
     let doctor = await Doctor.find();
@@ -226,6 +225,7 @@ exports.register = async (req, res, next) => {
       await doctor.save();
       await user.save();
     }
+    await user.save();
 
     res.json({ msg: 'User created successfully' + ' ' + newUserNumber });
   } catch (err) {
