@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Listbox, Menu, Transition } from '@headlessui/react';
+import { Listbox, Menu, Transition, RadioGroup } from '@headlessui/react';
 import { addDays } from 'date-fns';
 import MainLayout from '../components/MainLayout';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -9,10 +9,11 @@ import {
 } from '../features/appointment/appointmentSlice';
 import CreateAppointment from '../components/CreateAppointment';
 import { FiEdit, FiUser, FiSearch, FiCalendar } from 'react-icons/fi';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineUser } from 'react-icons/ai';
+import { MdAccessTime } from 'react-icons/md';
 import { DateRangePicker } from 'react-date-range';
 import Calendar from 'react-calendar';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 
 const sort = [
   { id: 1, name: 'All statuses' },
@@ -23,6 +24,15 @@ const sort = [
   { id: 6, name: 'Missed' },
   { id: 7, name: 'Cancelled' },
 ];
+
+const timeSlot = [
+  { id: 1, time: '10:00 am' },
+  { id: 2, time: '11:00 am' },
+  { id: 3, time: '12:00 noon' },
+  { id: 4, time: '13:00 pm' },
+  { id: 5, time: '14:00 pm' },
+];
+
 const Appointment = () => {
   const dispatch = useAppDispatch();
   const [selected, setSelected] = useState('profile');
@@ -31,6 +41,7 @@ const Appointment = () => {
     useAppSelector((state) => state.appointment);
 
   const [state, setState] = useState<boolean>(false);
+  const [stateCal, setStateCal] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   function openModal(): void {
@@ -48,6 +59,9 @@ const Appointment = () => {
 
   const showCalendar = () => {
     setState(!state);
+  };
+  const showCal = () => {
+    setStateCal(!stateCal);
   };
 
   useEffect(() => {
@@ -189,7 +203,10 @@ const Appointment = () => {
           {/* end date */}
           {/* new appointment  */}
           <div className="flex items-center">
-            <button onClick={openModal} className="bg-purple-600 text-white text-xs px-4 py-4  rounded-md">
+            <button
+              onClick={openModal}
+              className="bg-purple-600 text-white text-xs px-4 py-4  rounded-md"
+            >
               New appointment
             </button>
           </div>
@@ -283,42 +300,155 @@ const Appointment = () => {
         </div>
       </div>
 
-      {modalIsOpen && <CreateAppointmentModal modalIsOpen={modalIsOpen} closeModal={closeModal} />}
+      {modalIsOpen && (
+        <CreateAppointmentModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+        />
+      )}
     </MainLayout>
   );
 };
 
-const CreateAppointmentModal = ({modalIsOpen, closeModal}) => {
+const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
+  const [stateCal, setStateCal] = useState<boolean>(false);
+  const [dateState, setDateState] = useState<string>();
+  const [showTime, setShowTime] = useState<boolean>(false);
+  const [selectedFilterOption, setSelectedFilterOption] = useState<string>('');
+
+  const showTimeOptions = () => {
+    setShowTime(!showTime);
+  };
+
+  const showCal = () => {
+    setStateCal(!stateCal);
+  };
+
+  const changeDate = (e) => {
+    setDateState(e);
+  };
+
+  console.log('appDate', dateState);
+  console.log('selectedFilterOption', selectedFilterOption);
+
   const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      // top: '50%',
+      // left: '50%',
+      // right: 'auto',
+      // bottom: 'auto',
+      // marginRight: '-50%',
+      // transform: 'translate(-50%, -50%)',
+
+      maxWidth: '576px',
+      maxHeight: '576px',
+      margin: 'auto',
+      padding: '50px',
+      backgroundColor: '#f2f4f6',
     },
   };
+  const optionsWrapperClassName =
+    'absolute top-16 overflow-auto bg-white rounded-md shadow-dropdown max-h-64 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[10.9375rem]';
   return (
     <Modal
-    isOpen={modalIsOpen}
-    // onAfterOpen={afterOpenModal}
-    onRequestClose={closeModal}
-    style={customStyles}
-    contentLabel="Example Modal"
-  >
-    {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-    <button onClick={closeModal}>close</button>
-    <div>I am a modal</div>
-    <form>
-      <input />
-      <button>tab navigation</button>
-      <button>stays</button>
-      <button>inside</button>
-      <button>the modal</button>
-    </form>
-  </Modal>
-  )
-}
+      isOpen={modalIsOpen}
+      // onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Create appointment"
+    >
+      <div className="max-w-">
+        <h2 className="font-semibold text-xl">Create appointment</h2>
+      </div>
+
+      <form className="mt-10" action="">
+        {/* select date */}
+        <div className="flex items-center relative w-full mb-4">
+          <div
+            className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-full text-sm cursor-pointer"
+            onClick={showCal}
+          >
+            <div>
+              Select date: <span>{dateState}</span>{' '}
+            </div>
+            <FiCalendar />
+          </div>
+          {stateCal && (
+            <div
+              state={stateCal}
+              className="absolute top-5  bg-purple-200 rounded-xl mt-10 w-[320px] h-auto p-5"
+            >
+              <Calendar
+                maxDetail={'month'}
+                value={new Date()}
+                onChange={changeDate}
+              />
+            </div>
+          )}
+        </div>
+        {/* time */}
+        <div
+          onClick={showTimeOptions}
+          className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-36 text-sm cursor-pointer mb-4"
+        >
+          Start time
+          <MdAccessTime />
+        </div>
+
+        {showTime && (
+          <RadioGroup
+            showTime={showTime}
+            value={selectedFilterOption}
+            onChange={setSelectedFilterOption}
+            // onClick={(e)=> filter(e)}
+          >
+            <RadioGroup.Label className="sr-only">
+              Filter feedback
+            </RadioGroup.Label>
+            <div className="flex flex-wrap -ml-2 -mb-2">
+              {timeSlot.map(
+                (option) => (
+                  <RadioGroup.Option
+                    key={option.id}
+                    value={option.time}
+                    className={({ checked }) =>
+                      `px-2 py-1 rounded-lg font-medium text-xs ml-2 mb-2 cursor-pointer ${
+                        checked ? 'bg-purple-500' : 'bg-[#f2f4ff]'
+                      }`
+                    }
+                  >
+                    {({ checked }) => (
+                      <RadioGroup.Label
+                        as="p"
+                        className={`font-medium  ${
+                          checked ? 'text-white' : 'text-[#4760e7]'
+                        }`}
+                      >
+                        {option.time}
+                      </RadioGroup.Label>
+                    )}
+                    {/* {option} */}
+                  </RadioGroup.Option>
+                )
+              )}
+            </div>
+          </RadioGroup>
+        )}
+        {/* time end */}
+        
+        <div className="flex items-center relative w-full mb-4 mt-4">
+          <div
+            className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-full text-sm cursor-pointer"
+          >
+            <input className="bg-transparent w-full h-full focus:outline-none" type="text" name="name" placeholder="Enter name or id" />
+            <AiOutlineUser />
+          </div>
+        </div>
+
+
+      </form>
+    </Modal>
+  );
+};
 
 export default Appointment;
