@@ -7,6 +7,12 @@ export interface IUser {
   lastname: string;
   phoneNumber: string;
 }
+export interface IDoctor {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+}
 export interface AppointmentDetails {
   _id: number;
   patient: number;
@@ -15,6 +21,7 @@ export interface AppointmentDetails {
   appointmentTime: string;
   concern: string;
   user: IUser;
+  doctor: IDoctor;
 }
 
 export interface Appointment {

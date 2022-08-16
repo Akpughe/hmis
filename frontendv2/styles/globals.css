@@ -9,6 +9,11 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
+/* style placeholder */
+::-webkit-input-placeholder {
+    color: #000000 !important;
+}
+
 .dashgrid_container {  
     display: grid;
     grid-template-columns: 1fr 1fr;
