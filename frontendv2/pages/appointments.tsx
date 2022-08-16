@@ -12,12 +12,16 @@ import { FiEdit, FiUser, FiSearch, FiCalendar } from 'react-icons/fi';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { DateRangePicker } from 'react-date-range';
 import Calendar from 'react-calendar';
+import Modal from 'react-modal'
 
 const sort = [
   { id: 1, name: 'All statuses' },
   { id: 2, name: 'Complete' },
-  { id: 3, name: 'Rescheduled' },
-  { id: 4, name: 'Cancelled' },
+  { id: 3, name: 'In Progress' },
+  { id: 4, name: 'Not started' },
+  { id: 5, name: 'Rescheduled' },
+  { id: 6, name: 'Missed' },
+  { id: 7, name: 'Cancelled' },
 ];
 const Appointment = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +31,16 @@ const Appointment = () => {
     useAppSelector((state) => state.appointment);
 
   const [state, setState] = useState<boolean>(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+
+  function openModal(): void {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const [dateState, setDateState] = useState(new Date());
   const changeDate = (e) => {
     setDateState(e);
@@ -54,7 +68,7 @@ const Appointment = () => {
     };
   }, []);
   const optionsWrapperClassName =
-    'absolute top-16 overflow-auto bg-white rounded-md shadow-dropdown max-h-60 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[10.9375rem]';
+    'absolute top-16 overflow-auto bg-white rounded-md shadow-dropdown max-h-64 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[10.9375rem]';
   const optionsWrapperClassName2 =
     'absolute top-16 right-20 overflow-auto bg-white rounded-md shadow-dropdown max-h-60 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[30rem]';
 
@@ -175,7 +189,7 @@ const Appointment = () => {
           {/* end date */}
           {/* new appointment  */}
           <div className="flex items-center">
-            <button className="bg-purple-600 text-white text-xs px-4 py-4  rounded-md">
+            <button onClick={openModal} className="bg-purple-600 text-white text-xs px-4 py-4  rounded-md">
               New appointment
             </button>
           </div>
@@ -220,6 +234,10 @@ const Appointment = () => {
                     appointment.user?.firstname +
                     ' ' +
                     appointment.user?.lastname;
+                  const docFullName =
+                    appointment.doctor?.firstname +
+                    ' ' +
+                    appointment.doctor?.lastname;
                   const phoneNumber = appointment.user?.phoneNumber;
                   return (
                     <tr
@@ -238,6 +256,7 @@ const Appointment = () => {
                       </td>
                       <td className="p-4 ">{fullName}</td>
                       <td className="p-4">{phoneNumber}</td>
+                      <td className="p-4">{docFullName}</td>
                       <td className="flex space-x-2 p-4">
                         <div className="border rounded-lg p-2 text-blue-500 hover:bg-gray-100">
                           <FiEdit size={15} />
@@ -260,20 +279,46 @@ const Appointment = () => {
                 })}
               </tbody>
             </table>
-            // <ul>
-            //   {appointments.map((appointment) => (
-            //     <li key={appointment._id}>
-            //       {appointment.appointmentDate} - {appointment.appointmentTime} - {appointment.concern}
-            //     </li>
-            //   ))}
-            // </ul>
           )}
         </div>
       </div>
 
-      {/* <CreateAppointment /> */}
+      {modalIsOpen && <CreateAppointmentModal modalIsOpen={modalIsOpen} closeModal={closeModal} />}
     </MainLayout>
   );
 };
+
+const CreateAppointmentModal = ({modalIsOpen, closeModal}) => {
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+  return (
+    <Modal
+    isOpen={modalIsOpen}
+    // onAfterOpen={afterOpenModal}
+    onRequestClose={closeModal}
+    style={customStyles}
+    contentLabel="Example Modal"
+  >
+    {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
+    <button onClick={closeModal}>close</button>
+    <div>I am a modal</div>
+    <form>
+      <input />
+      <button>tab navigation</button>
+      <button>stays</button>
+      <button>inside</button>
+      <button>the modal</button>
+    </form>
+  </Modal>
+  )
+}
 
 export default Appointment;
