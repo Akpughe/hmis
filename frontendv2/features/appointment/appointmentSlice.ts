@@ -24,6 +24,12 @@ export interface AppointmentDetails {
   doctor: IDoctor;
 }
 
+interface userAppointment {
+  appointmentDate: string;
+  appointmentTime: string;
+  concern: string;
+}
+
 export interface Appointment {
   totalNumberofAppointments: number;
   appointments: AppointmentDetails[];
@@ -63,7 +69,7 @@ export const getAllAppointments = createAsyncThunk(
 
 export const createAppointment = createAsyncThunk(
   'appointment/createAppointment',
-  async (appointment, thunkAPI) => {
+  async (appointment:userAppointment, thunkAPI) => {
     try {
       return await appointmentService.createAppointments(appointment);
     } catch (error) {

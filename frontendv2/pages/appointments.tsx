@@ -33,6 +33,10 @@ const timeSlot = [
   { id: 5, time: '14:00 pm' },
 ];
 
+interface IProps{
+  state: any;
+}
+
 const Appointment = () => {
   const dispatch = useAppDispatch();
   const [selected, setSelected] = useState('profile');
@@ -189,7 +193,7 @@ const Appointment = () => {
             </div>
             {state && (
               <div
-                state={state}
+                // state={state}
                 className="absolute top-5  bg-purple-200 rounded-xl mt-10 w-[320px] h-auto p-5"
               >
                 <Calendar
@@ -375,8 +379,8 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
           </div>
           {stateCal && (
             <div
-              state={stateCal}
-              className="absolute top-5  bg-purple-200 rounded-xl mt-10 w-[320px] h-auto p-5"
+              // stateCal={stateCal}
+              className="absolute top-5  bg-purple-200 rounded-xl mt-10 w-[320px] h-auto p-5 z-50"
             >
               <Calendar
                 maxDetail={'month'}
@@ -397,7 +401,7 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
 
         {showTime && (
           <RadioGroup
-            showTime={showTime}
+            // showTime={showTime}
             value={selectedFilterOption}
             onChange={setSelectedFilterOption}
             // onClick={(e)=> filter(e)}
