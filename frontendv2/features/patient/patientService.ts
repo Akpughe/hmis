@@ -11,19 +11,7 @@ export const getTotalPatients = async () => {
   return response.data;
 };
 
-export const addPatient = async (patientData: {
-  patientData: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    phoneNumber: string;
-    maritalStatus: string;
-    gender: string;
-    dateOfBirth: string;
-    address: string;
-    password: string;
-  };
-}) => {
+export const addPatient = async (patientData) => {
   const response = await axios.post(API_URL + '/user/register', patientData);
   return response.data;
 };

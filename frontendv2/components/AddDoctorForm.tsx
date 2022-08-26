@@ -54,6 +54,7 @@ const AddPatienthtmlForm = () => {
     e.preventDefault();
   
     dispatch(createPatient(formData));
+    // dispatch(createPatient());
 
     isSuccess ? toast.success(message) : ''
   };
