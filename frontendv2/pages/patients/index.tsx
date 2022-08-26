@@ -126,7 +126,7 @@ const Patient = () => {
                 }
               }).map((patient) => {
                   return (
-                    <tr className="bg-white border-b hover:bg-slate-50 cursor-pointer ">
+                    <tr key={patient?._id} className="bg-white border-b hover:bg-slate-50 cursor-pointer ">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           {patient?.userNumber}

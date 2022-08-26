@@ -33,7 +33,7 @@ const timeSlot = [
   { id: 5, time: '14:00 pm' },
 ];
 
-interface IProps{
+interface IProps {
   state: any;
 }
 
@@ -135,7 +135,7 @@ const Appointment = () => {
                       <path
                         d="M1 1l4 4 4-4"
                         stroke="currentColor"
-                        stroke-width="2"
+                        strokeWidth="2"
                       ></path>
                     </svg>
                   </div>
@@ -410,46 +410,45 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
               Filter feedback
             </RadioGroup.Label>
             <div className="flex flex-wrap -ml-2 -mb-2">
-              {timeSlot.map(
-                (option) => (
-                  <RadioGroup.Option
-                    key={option.id}
-                    value={option.time}
-                    className={({ checked }) =>
-                      `px-2 py-1 rounded-lg font-medium text-xs ml-2 mb-2 cursor-pointer ${
-                        checked ? 'bg-purple-500' : 'bg-[#f2f4ff]'
-                      }`
-                    }
-                  >
-                    {({ checked }) => (
-                      <RadioGroup.Label
-                        as="p"
-                        className={`font-medium  ${
-                          checked ? 'text-white' : 'text-[#4760e7]'
-                        }`}
-                      >
-                        {option.time}
-                      </RadioGroup.Label>
-                    )}
-                    {/* {option} */}
-                  </RadioGroup.Option>
-                )
-              )}
+              {timeSlot.map((option) => (
+                <RadioGroup.Option
+                  key={option.id}
+                  value={option.time}
+                  className={({ checked }) =>
+                    `px-2 py-1 rounded-lg font-medium text-xs ml-2 mb-2 cursor-pointer ${
+                      checked ? 'bg-purple-500' : 'bg-[#f2f4ff]'
+                    }`
+                  }
+                >
+                  {({ checked }) => (
+                    <RadioGroup.Label
+                      as="p"
+                      className={`font-medium  ${
+                        checked ? 'text-white' : 'text-[#4760e7]'
+                      }`}
+                    >
+                      {option.time}
+                    </RadioGroup.Label>
+                  )}
+                  {/* {option} */}
+                </RadioGroup.Option>
+              ))}
             </div>
           </RadioGroup>
         )}
         {/* time end */}
-        
+
         <div className="flex items-center relative w-full mb-4 mt-4">
-          <div
-            className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-full text-sm cursor-pointer"
-          >
-            <input className="bg-transparent w-full h-full focus:outline-none" type="text" name="name" placeholder="Enter name or id" />
+          <div className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-full text-sm cursor-pointer">
+            <input
+              className="bg-transparent w-full h-full focus:outline-none"
+              type="text"
+              name="name"
+              placeholder="Enter name or id"
+            />
             <AiOutlineUser />
           </div>
         </div>
-
-
       </form>
     </Modal>
   );
