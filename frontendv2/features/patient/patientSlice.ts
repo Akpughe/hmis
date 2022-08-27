@@ -80,7 +80,7 @@ export const getTotalPatients = createAsyncThunk(
 
 export const createPatient = createAsyncThunk(
   'patient/createPatient',
-  async (patient, thunkAPI) => {
+  async (patient:RegData, thunkAPI) => {
     try {
       return await patientService.addPatient(patient);
     } catch (error) {

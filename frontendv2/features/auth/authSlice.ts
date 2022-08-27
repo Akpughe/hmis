@@ -14,6 +14,12 @@ export interface UserDetails {
   email: string;
   phoneNuber: string;
   accountType: string;
+  user:any
+}
+
+export interface ILogin {
+  userNumber: string;
+  password: string;
 }
 
 export interface User {
@@ -50,7 +56,7 @@ export const register = createAsyncThunk(
   }
 );
 // login
-export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (user:ILogin, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
