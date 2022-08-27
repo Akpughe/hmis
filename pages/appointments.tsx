@@ -33,10 +33,6 @@ const timeSlot = [
   { id: 5, time: '14:00 pm' },
 ];
 
-interface IProps {
-  state: any;
-}
-
 const Appointment = () => {
   const dispatch = useAppDispatch();
   const [selected, setSelected] = useState('profile');
