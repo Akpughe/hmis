@@ -151,7 +151,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let patient;
   // get pro on build
   const { data } = await axios.get(
-    `http://localhost:4000/api/patient/${params.id}`
+    `https://myhmis.herokuapp.com/api/patient/${params.id}`
   );
   patient = data;
 
