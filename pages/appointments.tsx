@@ -7,6 +7,8 @@ import {
   getAllAppointments,
   reset,
 } from '../features/appointment/appointmentSlice';
+import { getPatients } from '../features/patient/patientSlice';
+import { getDoctors } from '../features/doctor/doctorSlice';
 import CreateAppointment from '../components/CreateAppointment';
 import { FiEdit, FiUser, FiSearch, FiCalendar } from 'react-icons/fi';
 import { AiOutlineDelete, AiOutlineUser } from 'react-icons/ai';
@@ -40,9 +42,14 @@ const Appointment = () => {
   const { appointments, isLoading, isError, isSuccess, message } =
     useAppSelector((state) => state.appointment);
 
+  // const { doctors, totalNumberofDoctors } = useAppSelector(
+  //   (state) => state.doctor
+  // );
+
   const [state, setState] = useState<boolean>(false);
   const [stateCal, setStateCal] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [docs, setDocs] = useState<any>([]);
 
   function openModal(): void {
     setIsOpen(true);
@@ -76,11 +83,16 @@ const Appointment = () => {
 
     // dispatch(getTotalPatients());
     dispatch(getAllAppointments());
+    // dispatch(getDoctors());
 
     return () => {
       dispatch(reset());
     };
   }, []);
+
+  // get patients by account type
+  // console.log('doctors', doctors);
+
   const optionsWrapperClassName =
     'absolute top-16 overflow-auto bg-white rounded-md shadow-dropdown max-h-64 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[10.9375rem]';
   const optionsWrapperClassName2 =
@@ -311,10 +323,38 @@ const Appointment = () => {
 };
 
 const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
+  const dispatch = useAppDispatch();
   const [stateCal, setStateCal] = useState<boolean>(false);
   const [dateState, setDateState] = useState<string>();
   const [showTime, setShowTime] = useState<boolean>(false);
   const [selectedFilterOption, setSelectedFilterOption] = useState<string>('');
+  const [searchDoctor, setSearchDoctor] = useState<string>('');
+  const [suggestion, setSuggestion] = useState<any>([]);
+
+  const { doctors, totalNumberofDoctors } = useAppSelector(
+    (state) => state.doctor
+  );
+
+  const onChangeHandler = (searchDoctor) => {
+    let matches = [];
+    if (searchDoctor.length > 0) {
+      matches = doctors.filter((doctor) => {
+        const regex = new RegExp(`${searchDoctor}`, 'gi');
+        return doctor.firstname.match(regex);
+      });
+    }
+    console.log('matches', matches);
+    setSuggestion(matches);
+    setSearchDoctor(searchDoctor);
+  };
+
+  useEffect(() => {
+    dispatch(getDoctors());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, []);
 
   const showTimeOptions = () => {
     setShowTime(!showTime);
@@ -330,6 +370,7 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
 
   console.log('appDate', dateState);
   console.log('selectedFilterOption', selectedFilterOption);
+  console.log('doctors', doctors);
 
   const customStyles = {
     content: {
@@ -441,10 +482,17 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
               type="text"
               name="name"
               placeholder="Enter name or id"
+              onChange={(e) => onChangeHandler(e.target.value)}
+              value={searchDoctor}
             />
             <AiOutlineUser />
           </div>
         </div>
+          {suggestion?.map((sug) => {
+            return (
+              <div key={sug._id}>{sug.firstname + ' ' + sug.lastname}</div>
+            );
+          })}
       </form>
     </Modal>
   );
