@@ -25,9 +25,10 @@ export interface AppointmentDetails {
 }
 
 interface userAppointment {
-  appointmentDate: string;
+  appointmentDate: Date;
   appointmentTime: string;
   concern: string;
+  doctor: string;
 }
 
 export interface Appointment {

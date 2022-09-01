@@ -5,6 +5,7 @@ import MainLayout from '../components/MainLayout';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   getAllAppointments,
+  createAppointment,
   reset,
 } from '../features/appointment/appointmentSlice';
 import { getPatients } from '../features/patient/patientSlice';
@@ -16,6 +17,7 @@ import { MdAccessTime } from 'react-icons/md';
 import { DateRangePicker } from 'react-date-range';
 import Calendar from 'react-calendar';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
 
 const sort = [
   { id: 1, name: 'All statuses' },
@@ -57,6 +59,7 @@ const Appointment = () => {
 
   function closeModal() {
     setIsOpen(false);
+    dispatch(getAllAppointments());
   }
 
   const [dateState, setDateState] = useState(new Date());
@@ -330,6 +333,24 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
   const [selectedFilterOption, setSelectedFilterOption] = useState<string>('');
   const [searchDoctor, setSearchDoctor] = useState<string>('');
   const [suggestion, setSuggestion] = useState<any>([]);
+  const [appData, setAppData] = useState({
+    appointmentDate: new Date(),
+    appointmentTime: '',
+    doctor: '',
+    concern: '', 
+  })
+  const [selectedDoc, setSelectedDoc] = useState()
+
+  const {appointmentDate, appointmentTime, concern, doctor} = appData
+  // setAppData({...appData, appointmentTime: selectedFilterOption})
+
+  const { appointments, isLoading, isError, isSuccess, message } =
+  useAppSelector((state) => state.appointment);
+ 
+  const handleChange = (e) => {
+    setAppData({...appData, [e.target.name]: e.target.value})
+  }
+
 
   const { doctors, totalNumberofDoctors } = useAppSelector(
     (state) => state.doctor
@@ -349,6 +370,10 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
   };
 
   useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
     dispatch(getDoctors());
 
     return () => {
@@ -365,12 +390,27 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
   };
 
   const changeDate = (e) => {
-    setDateState(e);
+    // setDateState(e);
+    setAppData({...appData, appointmentDate})
   };
 
-  console.log('appDate', dateState);
-  console.log('selectedFilterOption', selectedFilterOption);
-  console.log('doctors', doctors);
+  const changeTime = () => {
+    setAppData({...appData, appointmentTime})
+  }
+
+  console.log('appTime', selectedFilterOption);
+  // console.log('selectedFilterOption', selectedFilterOption);
+  // console.log('doctors', doctors);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    dispatch(createAppointment({...appData, appointmentTime:selectedFilterOption}));
+    dispatch(getAllAppointments());
+    isSuccess ? toast.success('Appointment added') : ''
+
+    closeModal()
+  };
 
   const customStyles = {
     content: {
@@ -390,7 +430,9 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
   };
   const optionsWrapperClassName =
     'absolute top-16 overflow-auto bg-white rounded-md shadow-dropdown max-h-64 focus:outline-none divide-y divide-secondary divide-opacity-10 w-[10.9375rem]';
-  return (
+  
+  console.log('appData', appData)
+    return (
     <Modal
       isOpen={modalIsOpen}
       // onAfterOpen={afterOpenModal}
@@ -402,7 +444,7 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
         <h2 className="font-semibold text-xl">Create appointment</h2>
       </div>
 
-      <form className="mt-10" action="">
+      <form className="mt-10" onSubmit={(e)=> handleSubmit(e)}>
         {/* select date */}
         <div className="flex items-center relative w-full mb-4">
           <div
@@ -421,7 +463,7 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
             >
               <Calendar
                 maxDetail={'month'}
-                value={new Date()}
+                value={appointmentDate}
                 onChange={changeDate}
               />
             </div>
@@ -441,7 +483,7 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
             // showTime={showTime}
             value={selectedFilterOption}
             onChange={setSelectedFilterOption}
-            // onClick={(e)=> filter(e)}
+            // onClick={(e)=> setAppData({...appData, appointmentTime:selectedFilterOption})}
           >
             <RadioGroup.Label className="sr-only">
               Filter feedback
@@ -488,11 +530,38 @@ const CreateAppointmentModal = ({ modalIsOpen, closeModal }) => {
             <AiOutlineUser />
           </div>
         </div>
-          {suggestion?.map((sug) => {
-            return (
-              <div key={sug._id}>{sug.firstname + ' ' + sug.lastname}</div>
-            );
-          })}
+        {suggestion?.map((sug) => {
+          return (
+            <div className="bg-white rounded-lg p-4">
+              <div
+                className="hover:bg-gray-200 h-full p-2  rounded-lg"
+                key={sug._id}
+                onClick={() => setAppData({...appData, doctor:sug._id})}
+              >
+                {sug.firstname + ' ' + sug.lastname}
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="flex items-center relative w-full mb-4 mt-4">
+          <div className="flex items-center justify-between border-2 border-purple-500 px-4 py-3 rounded-lg w-full text-sm cursor-pointer">
+            <textarea
+              className="bg-transparent w-full h-full focus:outline-none"
+              name="concern"
+              placeholder="Concern"
+              onChange={handleChange}
+              value={concern}
+            ></textarea>
+            {/* <AiOutlineUser /> */}
+          </div>
+        </div>
+
+        {/* button */}
+        <button type="submit" className="bg-purple-600 text-purple-100 text-xs px-3 py-3 rounded-md w-full">
+          Confirm
+        </button>
+        {/* end button */}
       </form>
     </Modal>
   );
