@@ -89,6 +89,7 @@ export default function Home() {
                   value={userNumber}
                   onChange={(e) => onChange(e)}
                   required
+                  className="userNumber"
                 />
               </div>
               <div className="mt-4">
@@ -104,6 +105,7 @@ export default function Home() {
                   value={password}
                   onChange={(e) => onChange(e)}
                   placeholder=""
+                  className="userPassword"
                 />
               </div>
               <div className="mt-8">
