@@ -8,6 +8,7 @@ import {
   reset,
 } from '../features/patient/patientSlice';
 import { toast } from 'react-toastify';
+import Chart from '../components/Chart';
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +45,9 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <div className="flex w-full">
-        <div className="w-full h-80 border mr-4">chart</div>
+        <div className="w-full h-80 border mr-4">
+          <Chart />
+        </div>
         <div className="dashgrid_container w-full ">
           <div className="w-full h-full border rounded-md bg-[#b2ff51]  p-5">
             <div>
@@ -55,7 +58,10 @@ const Dashboard = () => {
                   </h3>
                 </div>
                 <div>
-                  <a onClick={()=>router.push('/add-patient')} className="flex justify-between w-full items-center text-xs bg-white px-2 py-1 rounded font-semibold cursor-pointer">
+                  <a
+                    onClick={() => router.push('/add-patient')}
+                    className="flex justify-between w-full items-center text-xs bg-white px-2 py-1 rounded font-semibold cursor-pointer"
+                  >
                     add patient
                   </a>
                 </div>
