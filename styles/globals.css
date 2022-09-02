@@ -189,3 +189,30 @@ body{
   font-weight: 500;
 }
   
+
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select,
+.select {
+  margin-top: 1rem;
+  width: 100%;
+  border-radius: 0.3125rem;
+  border-style: none;
+  background-color: rgba(247, 248, 253, var(--tw-bg-opacity));
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
