@@ -183,4 +183,9 @@ body{
 }
 
   /* end react calendar */
+
+.recharts-text{
+  font-size: 12px;
+  font-weight: 500;
+}
   
