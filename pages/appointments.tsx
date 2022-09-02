@@ -10,7 +10,7 @@ import {
 } from '../features/appointment/appointmentSlice';
 import { getPatients } from '../features/patient/patientSlice';
 import { getDoctors } from '../features/doctor/doctorSlice';
-import CreateAppointment from '../components/CreateAppointment';
+// import CreateAppointment from '../components/CreateAppointment';
 import { FiEdit, FiUser, FiSearch, FiCalendar } from 'react-icons/fi';
 import { AiOutlineDelete, AiOutlineUser } from 'react-icons/ai';
 import { MdAccessTime } from 'react-icons/md';
