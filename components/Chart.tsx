@@ -1,13 +1,12 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
+AreaChart,
+Area,
+XAxis,
+YAxis,
+CartesianGrid,
+Tooltip,
+ResponsiveContainer,
 //   linearGradient,
 } from 'recharts';
 
