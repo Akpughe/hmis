@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@reduxjs/toolkit": "^1.8.2",
+    "@uiball/loaders": "^1.2.6",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "date-fns": "^2.29.1",

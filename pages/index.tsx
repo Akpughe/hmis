@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useRouter } from 'next/router';
 import { login, reset } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
+import { Waveform } from '@uiball/loaders';
+
 export interface LoginProps {
   userNumber: string;
   password: string;
@@ -37,7 +39,11 @@ export default function Home() {
   }, [user, isError, isSuccess, message, router, dispatch]);
 
   if (isLoading) {
-    return <div className="flex justify-center items-center w-full h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <Waveform size={40} lineWeight={3.5} speed={1} color="black" />
+      </div>
+    );
   }
 
   const onChange = (e) =>
